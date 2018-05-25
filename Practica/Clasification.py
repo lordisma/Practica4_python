@@ -130,6 +130,7 @@ def Create(names):
     np.save('data/Feature.npy', Features)
 
     pass
+
 #################################################################################
 #if __name__ == 'main':
 print(__doc__)
@@ -156,9 +157,10 @@ Feature = np.load("data/Feature.npy")
 Label   = np.load("data/Label.npy")
 
 Validation_Feature, Test_Feature , Validation_Label, Test_Labelt = train_test_split(
-    Feature, Label, stratified=np.unique(Label), test_size = siz_Test, random_state = seed)
+    Feature, Label, stratify=Label, test_size = siz_Test, random_state = seed)
 
-preprocessing.StandardScaler(Validation_Feature)
+Validation_Label = preprocessing.LabelEncoder().fit_transform(Validation_Label)
+
 """
 ######Seleccion de parametros a usar#####
 parameters = [{'Model__penalty': ['l1'],'Model__C':[0.9,0.5,0.1]},
