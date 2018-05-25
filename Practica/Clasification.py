@@ -5,8 +5,8 @@
 #Science kit learn files
 from sklearn.model_selection import GridSearchCV
 from sklearn import preprocessing
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, roc_curve
+from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
 from sklearn.externals import 	joblib
 from sklearn.metrics import classification_report
@@ -135,12 +135,15 @@ def Create(names):
 #if __name__ == 'main':
 print(__doc__)
 seed = 50627728
+maxiter = 10000
 splits = 5
 siz_Test = 0.3
 saveName = 'Bank.pkl'
 nameFeature = "Feature.npy"
 nameLabel = "Label.npy"
 path = "data/"
+CategoricalAtribute = [1,2,3,4,5,6,7,8,9,14]
+RealAtribute = np.setdiff1d(range(20), CategoricalAtribute)
 
 if not Find(nameFeature, path=path):
     print("############CREANDO ARCHIVOS NPY##################3")
@@ -161,25 +164,42 @@ Validation_Feature, Test_Feature , Validation_Label, Test_Labelt = train_test_sp
 
 Validation_Label = preprocessing.LabelEncoder().fit_transform(Validation_Label)
 
-"""
-######Seleccion de parametros a usar#####
-parameters = [{'Model__penalty': ['l1'],'Model__C':[0.9,0.5,0.1]},
-				{'Model__penalty': ['l2'],'Model__C':[0.9,0.5,0.1]},
-              {'Model__penalty': ['l1'],'Model__C':[0.01,0.02,0.014142]},
-              {'Model__penalty': ['l2'],'Model__C':[0.01,0.02,0.014142]}]
 
+######Seleccion de parametros a usar#####
+parameters = [{'Model__C':[1.0,1e-6], 'Model__kernel':['rbf','poly','sigmoid'], 'Model__decision_function_shape':['ovo','ovr']}]
+
+#######Preprocesado de los datos, Scalado y Categorizado################
+Validation_Feature[:,RealAtribute] = preprocessing.StandardScaler().fit(Validation_Feature[:,RealAtribute]).transform(Validation_Feature[:,RealAtribute])
+
+for column in CategoricalAtribute:
+    if Validation_Feature[:,column].dtype == type(object):
+        le = preprocessing.LabelEncoder()
+        Validation_Feature[:,column] = le.fit_transform(Validation_Feature[:,column])
+
+Validation_Feature = preprocessing.OneHotEncoder(categorical_features=CategoricalAtribute, handle_unknown='ignore').fit_transform(Validation_Feature).todense()
+#Datos guardados en formato COOmatrix si se quieren ver en tamaño normal usar XXX.todense()
+#############################Valores Perdidos###############################
+
+
+
+##########################################################################
+"""
 ######Pipe donde incluimos Escalado y Modelo##########
-pipe = Pipeline([('Scale',preprocessing.StandardScaler()), ('Model',LogisticRegression(random_state=seed,max_iter=1000))])
+pipe = Pipeline([('Model',SVC(max_iter=maxiter))])
 grid = GridSearchCV(pipe, param_grid=parameters, cv=splits)
+
 
 #####Ajustado de los datos####
 grid.fit(Validation_Feature, Validation_Label)
 Save(grid,saveName) #Guardado del modelo para un uso más rapido en futuros momentos
 
+
 ####Impresion de los datos####
 print("Mejor valor de la cross validation: {:.4f}".format(grid.best_score_))
-#print("Valoracion Hiperparametros: {}".format(grid.decision_function))
 print("Mejores parametros: {}".format(grid.best_params_))
+
+"""
+"""
 print("Valor en el test:")
 print(classification_report(Test_Label, grid.predict(Test_Feature)))
 
