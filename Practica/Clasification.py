@@ -141,6 +141,8 @@ saveName = 'Bank.pkl'
 nameFeature = "Feature.npy"
 nameLabel = "Label.npy"
 path = "data/"
+CategoricalAtribute = [1,2,3,4,5,6,7,8,9,14]
+RealAtribute = np.setdiff1d(range(20), CategoricalAtribute)
 
 if not Find(nameFeature, path=path):
     print("############CREANDO ARCHIVOS NPY##################3")
@@ -161,16 +163,29 @@ Validation_Feature, Test_Feature , Validation_Label, Test_Labelt = train_test_sp
 
 Validation_Label = preprocessing.LabelEncoder().fit_transform(Validation_Label)
 
-"""
-######Seleccion de parametros a usar#####
-parameters = [{'Model__penalty': ['l1'],'Model__C':[0.9,0.5,0.1]},
-				{'Model__penalty': ['l2'],'Model__C':[0.9,0.5,0.1]},
-              {'Model__penalty': ['l1'],'Model__C':[0.01,0.02,0.014142]},
-              {'Model__penalty': ['l2'],'Model__C':[0.01,0.02,0.014142]}]
 
+######Seleccion de parametros a usar#####
+parameters = []
+
+
+#######Preprocesado de los datos, Scalado y Categorizado################
+Validation_Feature[:,RealAtribute] = preprocessing.StandardScaler().fit(Validation_Feature[:,RealAtribute]).transform(Validation_Feature[:,RealAtribute])
+
+for column in CategoricalAtribute:
+    if Validation_Feature[:,column].dtype == type(object):
+        le = preprocessing.LabelEncoder()
+        Validation_Feature[:,column] = le.fit_transform(Validation_Feature[:,column])
+preprocessing.OneHotEncoder(categorical_features=CategoricalAtribute, handle_unknown='ignore').fit_transform(Validation_Feature)
+
+##########################################################################
+"""
 ######Pipe donde incluimos Escalado y Modelo##########
-pipe = Pipeline([('Scale',preprocessing.StandardScaler()), ('Model',LogisticRegression(random_state=seed,max_iter=1000))])
+pipe = Pipeline([('Scale',preprocessing.StandardScaler()), ('OneHot',preprocessing.OneHotEncoder(categorical_features = CategoricalAtribute ))])
+Validation_Feature = pipe.fit_transform(Validation_Feature)
+print(Validation_Feature[:5,:5])
+
 grid = GridSearchCV(pipe, param_grid=parameters, cv=splits)
+
 
 #####Ajustado de los datos####
 grid.fit(Validation_Feature, Validation_Label)
