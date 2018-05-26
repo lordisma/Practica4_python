@@ -166,6 +166,7 @@ Validation_Label = preprocessing.LabelEncoder().fit_transform(Validation_Label)
 
 
 ######Seleccion de parametros a usar#####
+<<<<<<< HEAD
 parameters = [{'Model__C':[1.0,1e-6], 'Model__kernel':['rbf','poly','sigmoid'], 'Model__decision_function_shape':['ovo','ovr']}]
 
 #######Preprocesado de los datos, Scalado y Categorizado################
@@ -186,6 +187,27 @@ Validation_Feature = preprocessing.OneHotEncoder(categorical_features=Categorica
 """
 ######Pipe donde incluimos Escalado y Modelo##########
 pipe = Pipeline([('Model',SVC(max_iter=maxiter))])
+=======
+parameters = []
+
+
+#######Preprocesado de los datos, Scalado y Categorizado################
+Validation_Feature[:,RealAtribute] = preprocessing.StandardScaler().fit(Validation_Feature[:,RealAtribute]).transform(Validation_Feature[:,RealAtribute])
+
+for column in CategoricalAtribute:
+    if Validation_Feature[:,column].dtype == type(object):
+        le = preprocessing.LabelEncoder()
+        Validation_Feature[:,column] = le.fit_transform(Validation_Feature[:,column])
+preprocessing.OneHotEncoder(categorical_features=CategoricalAtribute, handle_unknown='ignore').fit_transform(Validation_Feature)
+
+##########################################################################
+"""
+######Pipe donde incluimos Escalado y Modelo##########
+pipe = Pipeline([('Scale',preprocessing.StandardScaler()), ('OneHot',preprocessing.OneHotEncoder(categorical_features = CategoricalAtribute ))])
+Validation_Feature = pipe.fit_transform(Validation_Feature)
+print(Validation_Feature[:5,:5])
+
+>>>>>>> master
 grid = GridSearchCV(pipe, param_grid=parameters, cv=splits)
 
 
