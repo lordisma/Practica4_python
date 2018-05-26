@@ -107,6 +107,40 @@ def plot_ROC_multiclass(XTest, YTest, clf ):
     plt.legend(loc="lower right")
     pass
 
+def Imputation(X):
+    missings = np.where(X == 'unknown')
+    row = missings[0]
+    Ypos = missings[1]
+    columns = np.unique(Ypos)
+
+    numberCha = []
+    classesNumber = np.zeros(X.shape[0])
+    for column in columns:
+        numberCha.append(len(row[Ypos == column])/X.shape[0])
+        row[Ypos == column] = 0
+        le = preprocessing.LabelEncoder()
+        X[:,column] = le.fit_transform(X[:,column])
+        index, = np.where(le.classes_ == 'unknown')
+        classesNumber[column] = index[0]
+
+    for i in range(len(columns)):
+        print("La columna {} tiene un {}% de valores perdidos".format(columns[i],numberCha[i]*100))
+
+    KnnImputer = np.array([columns[i] for i in range(len(numberCha)) if numberCha[i] > 0.01])
+    SimpleImputer = np.setdiff1d(columns, KnnImputer)
+    print()
+    print("Las columnas seleccionadas para la imputacion con KNN: {}".format(KnnImputer))
+    print("Las columnas seleccionadas para la imputacion simple : {}".format(SimpleImputer))
+
+    for i in SimpleImputer:
+        Simple = preprocessing.Imputer(missing_values=classesNumber[i], strategy='most_frequent')
+        X[:,SimpleImputer] = Simple.fit_transform(X[:,SimpleImputer])
+
+    """
+    Hay que incorporar el KNN para los valores no simples
+    """
+    pass
+
 #######################################Utility#####################################
 
 def Find(name, path):
@@ -164,9 +198,18 @@ Validation_Feature, Test_Feature , Validation_Label, Test_Labelt = train_test_sp
 
 Validation_Label = preprocessing.LabelEncoder().fit_transform(Validation_Label)
 
+for i in np.unique(Validation_Label):
+    print("Clase {} numero de instancias: {}".format(i,len(np.where(Validation_Label == i)[0])))
 
+print()
+
+#############################Valores Perdidos###############################
+
+missings = np.where(Validation_Feature == 'unknown')
+print("Tenemos una catidad de: {} valores perdidos".format(len(missings[1])))
+print("Distribucion:")
+Imputation(Validation_Feature)
 ######Seleccion de parametros a usar#####
-<<<<<<< HEAD
 parameters = [{'Model__C':[1.0,1e-6], 'Model__kernel':['rbf','poly','sigmoid'], 'Model__decision_function_shape':['ovo','ovr']}]
 
 #######Preprocesado de los datos, Scalado y Categorizado################
@@ -179,43 +222,19 @@ for column in CategoricalAtribute:
 
 Validation_Feature = preprocessing.OneHotEncoder(categorical_features=CategoricalAtribute, handle_unknown='ignore').fit_transform(Validation_Feature).todense()
 #Datos guardados en formato COOmatrix si se quieren ver en tamaño normal usar XXX.todense()
-#############################Valores Perdidos###############################
-
-
 
 ##########################################################################
 """
 ######Pipe donde incluimos Escalado y Modelo##########
 pipe = Pipeline([('Model',SVC(max_iter=maxiter))])
-=======
-parameters = []
-
-
-#######Preprocesado de los datos, Scalado y Categorizado################
-Validation_Feature[:,RealAtribute] = preprocessing.StandardScaler().fit(Validation_Feature[:,RealAtribute]).transform(Validation_Feature[:,RealAtribute])
-
-for column in CategoricalAtribute:
-    if Validation_Feature[:,column].dtype == type(object):
-        le = preprocessing.LabelEncoder()
-        Validation_Feature[:,column] = le.fit_transform(Validation_Feature[:,column])
-preprocessing.OneHotEncoder(categorical_features=CategoricalAtribute, handle_unknown='ignore').fit_transform(Validation_Feature)
-
-##########################################################################
-"""
-######Pipe donde incluimos Escalado y Modelo##########
-pipe = Pipeline([('Scale',preprocessing.StandardScaler()), ('OneHot',preprocessing.OneHotEncoder(categorical_features = CategoricalAtribute ))])
-Validation_Feature = pipe.fit_transform(Validation_Feature)
-print(Validation_Feature[:5,:5])
-
->>>>>>> master
 grid = GridSearchCV(pipe, param_grid=parameters, cv=splits)
 
 
 #####Ajustado de los datos####
 grid.fit(Validation_Feature, Validation_Label)
 Save(grid,saveName) #Guardado del modelo para un uso más rapido en futuros momentos
-
-
+"""
+"""
 ####Impresion de los datos####
 print("Mejor valor de la cross validation: {:.4f}".format(grid.best_score_))
 print("Mejores parametros: {}".format(grid.best_params_))
