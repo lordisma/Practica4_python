@@ -11,6 +11,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.externals import 	joblib
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
 
 #Others files
 import matplotlib.pyplot as plt
@@ -112,16 +113,21 @@ def Imputation(X):
     row = missings[0]
     Ypos = missings[1]
     columns = np.unique(Ypos)
+    CategoricalAtribute = [1,2,3,4,5,6,7,8,9,14]
+    Rest = np.setdiff1d(CategoricalAtribute, columns)
 
     numberCha = []
     classesNumber = np.zeros(X.shape[0])
     for column in columns:
         numberCha.append(len(row[Ypos == column])/X.shape[0])
-        row[Ypos == column] = 0
         le = preprocessing.LabelEncoder()
         X[:,column] = le.fit_transform(X[:,column])
         index, = np.where(le.classes_ == 'unknown')
         classesNumber[column] = index[0]
+
+    for rest in Rest:
+        le = preprocessing.LabelEncoder()
+        X[:,rest] = le.fit_transform(X[:,rest])
 
     for i in range(len(columns)):
         print("La columna {} tiene un {}% de valores perdidos".format(columns[i],numberCha[i]*100))
@@ -136,10 +142,20 @@ def Imputation(X):
         Simple = preprocessing.Imputer(missing_values=classesNumber[i], strategy='most_frequent')
         X[:,SimpleImputer] = Simple.fit_transform(X[:,SimpleImputer])
 
-    """
-    Hay que incorporar el KNN para los valores no simples
-    """
-    pass
+    for i in KnnImputer:
+        Knn = KNeighborsClassifier(n_neighbors = 3, p=2, algorithm='kd_tree', leaf_size=12, n_jobs=-1)
+        Label = X[:,i]
+        row_miss = row[Ypos == i]
+        normal_row = np.setdiff1d(range(len(Label)), row_miss)
+        Caracteristicas = np.delete(X, i, axis=1)
+        Test_Label  = Label[row_miss]
+        Train_Label = Label[normal_row].astype(np.int64)
+        Knn.fit(Caracteristicas[normal_row,:],Train_Label)
+        X[row_miss,i] = Knn.predict(Caracteristicas[row_miss,:])
+        print("{}:Tamaño conjunto de Test: {}".format(i,Test_Label.shape))
+        print("X: {}: :Caracteristicas: {}".format(X.shape,Caracteristicas.shape))
+
+    return X
 
 #######################################Utility#####################################
 
@@ -208,17 +224,14 @@ print()
 missings = np.where(Validation_Feature == 'unknown')
 print("Tenemos una catidad de: {} valores perdidos".format(len(missings[1])))
 print("Distribucion:")
-Imputation(Validation_Feature)
+Validation_Feature = Imputation(Validation_Feature)
+missings = np.where(Validation_Feature == 'unknown')
+print("Tras el procesamiento: {} valores perdidos".format(len(missings[1])))
 ######Seleccion de parametros a usar#####
 parameters = [{'Model__C':[1.0,1e-6], 'Model__kernel':['rbf','poly','sigmoid'], 'Model__decision_function_shape':['ovo','ovr']}]
 
 #######Preprocesado de los datos, Scalado y Categorizado################
 Validation_Feature[:,RealAtribute] = preprocessing.StandardScaler().fit(Validation_Feature[:,RealAtribute]).transform(Validation_Feature[:,RealAtribute])
-
-for column in CategoricalAtribute:
-    if Validation_Feature[:,column].dtype == type(object):
-        le = preprocessing.LabelEncoder()
-        Validation_Feature[:,column] = le.fit_transform(Validation_Feature[:,column])
 
 Validation_Feature = preprocessing.OneHotEncoder(categorical_features=CategoricalAtribute, handle_unknown='ignore').fit_transform(Validation_Feature).todense()
 #Datos guardados en formato COOmatrix si se quieren ver en tamaño normal usar XXX.todense()
