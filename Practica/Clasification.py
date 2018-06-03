@@ -12,6 +12,8 @@ from sklearn.externals import 	joblib
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from imblearn.over_sampling import SMOTE
+from sklearn.ensemble import RandomForestClassifier
 
 #Others files
 import matplotlib.pyplot as plt
@@ -157,6 +159,20 @@ def Imputation(X):
 
     return X
 
+def plot_Importance(rfc, Xres):
+    importance = rfc.feature_importances_
+    indices = np.argsort(importance)
+
+    indices = indices[np.where(importance > 0.05)]
+
+    plt.figure()
+    plt.title("Feature importances (> 0.05)")
+    plt.bar(range(len(indices)), importance[indices],
+           color="r", align="center")
+    plt.xticks(range(len(indices)), indices, rotation='vertical')
+    plt.xlim([-1, len(indices)])
+    pass
+
 #######################################Utility#####################################
 
 def Find(name, path):
@@ -221,37 +237,68 @@ print()
 
 #############################Valores Perdidos###############################
 
-missings = np.where(Validation_Feature == 'unknown')
-print("Tenemos una catidad de: {} valores perdidos".format(len(missings[1])))
-print("Distribucion:")
-Validation_Feature = Imputation(Validation_Feature)
-missings = np.where(Validation_Feature == 'unknown')
-print("Tras el procesamiento: {} valores perdidos".format(len(missings[1])))
 ######Seleccion de parametros a usar#####
 parameters = [{'Model__C':[1.0,1e-6], 'Model__kernel':['rbf','poly','sigmoid'], 'Model__decision_function_shape':['ovo','ovr']}]
 
 #######Preprocesado de los datos, Scalado y Categorizado################
 Validation_Feature[:,RealAtribute] = preprocessing.StandardScaler().fit(Validation_Feature[:,RealAtribute]).transform(Validation_Feature[:,RealAtribute])
 
+missings = np.where(Validation_Feature == 'unknown')
+print("Tenemos una catidad de: {} valores perdidos".format(len(missings[1])))
+print("Distribucion:")
+Validation_Feature = Imputation(Validation_Feature)
+missings = np.where(Validation_Feature == 'unknown')
+print("Tras el procesamiento: {} valores perdidos".format(len(missings[1])))
+
 Validation_Feature = preprocessing.OneHotEncoder(categorical_features=CategoricalAtribute, handle_unknown='ignore').fit_transform(Validation_Feature).todense()
 #Datos guardados en formato COOmatrix si se quieren ver en tamaño normal usar XXX.todense()
 
+sm = SMOTE(ratio='minority',random_state=seed, k_neighbors=3)
+Xres, Yres = sm.fit_sample(Validation_Feature, Validation_Label)
+
+print()
+print("Tras el Balanceado")
+print("Dimension de la nueva matriz:{},     Dimension:{}".format(Xres.shape,Validation_Feature.shape))
+for i in np.unique(Yres):
+    print("Clase {} numero de instancias: {}".format(i,len(np.where(Yres == i)[0])))
+
+print()
+
+rfc = RandomForestClassifier(n_estimators=50, n_jobs=-1, max_depth=30, min_samples_leaf=10, max_features="sqrt").fit(Xres,Yres)
+
+print("Scorer en la particion train: {}".format(rfc.score(Validation_Feature, Validation_Label)))
+
+importance = rfc.feature_importances_
+indices = np.argsort(importance)
+
+indices = indices[np.where(importance > 0.05)]
+
+prediction = rfc.predict(Xres)
+prediction_index = np.where(Yres == prediction)[0]
+prediction_index = prediction_index.reshape(-1)
+indices = indices.reshape(-1)
+
+Xres = Xres[prediction_index,:]
+Xres = Xres[:,indices]
+Yres = Yres[prediction_index]
+
 ##########################################################################
-"""
+
+
 ######Pipe donde incluimos Escalado y Modelo##########
 pipe = Pipeline([('Model',SVC(max_iter=maxiter))])
 grid = GridSearchCV(pipe, param_grid=parameters, cv=splits)
 
 
 #####Ajustado de los datos####
-grid.fit(Validation_Feature, Validation_Label)
+grid.fit(Xres, Yres)
 Save(grid,saveName) #Guardado del modelo para un uso más rapido en futuros momentos
-"""
-"""
+
+
 ####Impresion de los datos####
 print("Mejor valor de la cross validation: {:.4f}".format(grid.best_score_))
 print("Mejores parametros: {}".format(grid.best_params_))
-
+"""
 """
 """
 print("Valor en el test:")
