@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.4.13)  25 MAY 2018 18:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.4.13)  3 JUN 2018 22:41
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -259,61 +259,55 @@ File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 \openout3 = `P4.toc'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--51
-
+Overfull \hbox (19.37161pt too wide) in paragraph at lines 54--56
+\T1/cmr/m/n/10.95 apren-dizaje pre-senta val-ores nu-los en cier-tas car-ac-ter
+ís-ti-cas, que hemos cod-i-fi-cado
  []
 
 
-Overfull \hbox (1.00964pt too wide) in paragraph at lines 59--60
-\T1/cmr/m/n/10.95 Para la clasi-fi-cación nos hemos servido de la re-gre-sión l
-ogís-tica, im-ple-men-tada
+Underfull \hbox (badness 10000) in paragraph at lines 54--56
+
  []
 
 [1
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (24.46304pt too wide) in paragraph at lines 61--63
-[]\T1/cmr/m/n/10.95 Para la re-gre-sión hemos con-trastado los mod-e-los Lasso 
-y Ridge, im-ple-men-ta-dos
+Underfull \hbox (badness 10000) in paragraph at lines 59--61
+
  []
 
 
-Overfull \hbox (10.22958pt too wide) in paragraph at lines 61--63
-\T1/cmr/m/n/10.95 bajo los homón-i-mos \T1/cmtt/m/n/10.95 Lasso \T1/cmr/m/n/10.
-95 y \T1/cmtt/m/n/10.95 Ridge\T1/cmr/m/n/10.95 . Am-bos in-ten-tan re-ducir la 
-di-men-sion-al-i-dad
+Overfull \hbox (2.05743pt too wide) in paragraph at lines 75--77
+\T1/cmr/m/n/10.95 pues dis-min-uye drás-ti-ca-mente la prob-a-bil-i-dad de que 
+caigan en un so-brea-juste
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 61--63
+Underfull \hbox (badness 10000) in paragraph at lines 75--77
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 76--78
+Overfull \hbox (1.3897pt too wide) in paragraph at lines 83--85
+\T1/cmr/m/n/10.95 por un RF, es-pe-cial-mente po-tentes para re-alizar predic-c
+iones tomando val-ores
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--85
 
  []
 
 
-Overfull \hbox (37.14613pt too wide) in paragraph at lines 79--80
-[]\T1/cmr/m/n/10.95 Como métrica para con-trastar nos hemos servido del co-e-fi
--ciente de de-ter-mi-nación,
+Overfull \hbox (2.29936pt too wide) in paragraph at lines 93--95
+\T1/cmr/m/n/10.95 para su cor-recto tratamiento por las fun-ciones im-ple-men-t
+adas en el frame-work
  []
 
 
-Overfull \hbox (24.38086pt too wide) in paragraph at lines 93--95
-\T1/cmr/m/n/10.95 logís-tica para la clasi-fi-cación han sido $\OMS/cmsy/m/n/10
-.95 f\OML/cmm/m/it/10.95 L[]; L[]\OMS/cmsy/m/n/10.95 g$ \T1/cmr/m/n/10.95 para 
-la pe-nal-ización y $\OMS/cmsy/m/n/10.95 f\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.
-95 :\OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it
-/10.95 :\OT1/cmr/m/n/10.95 5\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/
-m/it/10.95 :\OT1/cmr/m/n/10.95 9\OMS/cmsy/m/n/10.95 g$
- []
-
-
-Overfull \hbox (7.32013pt too wide) in paragraph at lines 93--95
-\T1/cmr/m/n/10.95 gen-eran, hemos visto que la mejor com-bi-nación so-bre el co
-n-junto deapren-dizaje
+Overfull \hbox (12.47318pt too wide) in paragraph at lines 93--95
+\T1/cmr/m/n/10.95 val-ores numéri-cos dis-cre-tos y fi-nal-mente una nor-mal-iz
+ación de las car-ac-terís-ti-cas
  []
 
 
@@ -321,10 +315,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 93--95
 
  []
 
-[3]
-Overfull \hbox (7.20297pt too wide) in paragraph at lines 96--98
-\T1/cmr/m/n/10.95 clara que una tabla numérica hemos uti-lizado dos es-truc-tur
-as de rep-re-sentación
+
+Overfull \hbox (18.76303pt too wide) in paragraph at lines 96--98
+[]\T1/cmr/m/n/10.95 Para generar la base de datos BMDS, como hemos men-cionado 
+an-te-ri-or-mente,
  []
 
 
@@ -332,52 +326,58 @@ Underfull \hbox (badness 10000) in paragraph at lines 96--98
 
  []
 
-
-Overfull \hbox (8.40343pt too wide) in paragraph at lines 103--104
-[]\T1/cmr/m/n/10.95 La curva ROC mues-tra la pro-por-ción de ejem-p-los bien cl
-asi-fi-ca-dos con-forme
+[3]
+Overfull \hbox (31.55507pt too wide) in paragraph at lines 99--100
+\T1/cmr/m/n/10.95 rep-re-sentación aprox-i-mada-mente eq-ui-tativa de am-bas cl
+ases. Esta de-scom-pen-sación
  []
 
 
-Overfull \hbox (3.22119pt too wide) in paragraph at lines 103--104
-\T1/cmr/m/n/10.95 grá-fica es in-tere-sante porque el área que encierra bajo su
- curva es di-rec-ta-mente
+Overfull \hbox (1.28302pt too wide) in paragraph at lines 99--100
+\T1/cmr/m/n/10.95 por lo que ha sido nece-sario uti-lizar un método de equi-li-
+brado de par-tic-i-pación
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 110--112
-
+Overfull \hbox (24.18457pt too wide) in paragraph at lines 101--102
+[]\T1/cmr/m/n/10.95 Los de-sar-rol-ladores de SMOTE han es-tu-di-ado este prob-
+lema, y su her-ramienta,
  []
 
-[4] [5] (./P4.aux) ) 
+
+Overfull \hbox (8.90678pt too wide) in paragraph at lines 101--102
+\T1/cmr/m/n/10.95 en lu-gar de úni-ca-mente re-ducir la can-ti-dad de in-stan-c
+ias de la clase may-ori-taria,
+ []
+
+
+Overfull \hbox (33.75783pt too wide) in paragraph at lines 101--102
+\T1/cmr/m/n/10.95 in-stan-cias neg-a-ti-vas habría ll-e-vado a au-men-tar sig-n
+i-fica-ti-va-mente el com-por-tamiento
+ []
+
+[4] (./P4.aux) ) 
 Here is how much of TeX's memory you used:
- 3815 strings out of 492995
- 51496 string characters out of 6132704
+ 3813 strings out of 492995
+ 51478 string characters out of 6132704
  113263 words of memory out of 5000000
- 7313 multiletter control sequences out of 15000+600000
- 16617 words of font info for 48 fonts, out of 8000000 for 9000
+ 7312 multiletter control sequences out of 15000+600000
+ 15863 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,6n,32p,878b,266s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-supe
-r/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmex10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmmi8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
-.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.p
-fb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb
-></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr
-/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/l
-ocal/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb></usr/loc
-al/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on P4.pdf (5 pages, 209408 bytes).
+ 39i,6n,32p,949b,266s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm
+-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/s
+fbx1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfb
+x1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1
+440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm109
+5.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1200.
+pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pf
+b></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on P4.pdf (4 pages, 162370 bytes).
 PDF statistics:
- 81 PDF objects out of 1000 (max. 8388607)
- 58 compressed objects within 1 object stream
+ 50 PDF objects out of 1000 (max. 8388607)
+ 35 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
