@@ -386,40 +386,54 @@ Yres = Yres[prediction_index]
 
 
 # Pipe donde incluimos Escalado y Modelo
+
 pipe = Pipeline( [ ( 'Model', SVC( max_iter = maxiter ) ) ] )
 grid = GridSearchCV( pipe, param_grid = parameters, cv = splits )
 
 
 # Ajuste de los datos
+
 grid.fit( Xres, Yres )
-Save( grid, saveName ) # Guardado del modelo para un uso más rápido en futuros momentos
 
 
-# Mostrado de los resultados
+# Guardado del modelo para un uso más rápido en futuros momentos
+
+Save( grid, saveName )
+
+
+
+### Mostrado de los resultados finales ###
+
 
 print( "Mejor valor de la cross validation: {:.4f}".format( grid.best_score_ ) )
 print( "Mejores parámetros: {}".format( grid.best_params_ ) )
 
 
 """
-print("Valor en el test:")
-print(classification_report(Test_Label, grid.predict(X_test)))
+
+print( "Valor en el test:" )
+print( classification_report( y_test, grid.predict( X_test ) ) )
 
 
-cls_nam = np.unique(y_train)
-plot_confusion_matrix(confusion_matrix(Test_Label,grid.predict(X_test)),
-                      cls_nam,
-                      normalize=True)
+cls_nam = np.unique( y_train )
+plot_confusion_matrix(
+    confusion_matrix( y_test, grid.predict( X_test ) ),
+    cls_nam,
+    normalize = True
+)
 plt.show()
 
-plot_confusion_matrix(confusion_matrix(y_train,grid.predict(X_train)),
-                      cls_nam,
-                      normalize=True)
+plot_confusion_matrix(
+    confusion_matrix( y_train, grid.predict( X_train ) ),
+    cls_nam,
+    normalize = True
+)
 plt.show()
 
-plot_ROC_multiclass(X_test, Test_Label, grid)
+plot_ROC_multiclass( X_test, y_test, grid )
 plt.show()
 
-plot_security(grid, X_train, y_train)
+plot_security( grid, X_train, y_train )
 plt.show()
+
 """
