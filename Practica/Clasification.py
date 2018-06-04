@@ -225,6 +225,7 @@ np.set_printoptions(formatter={'float': lambda x: "{0:0.4f}".format(x)})
 Feature = np.load("data/Feature.npy")
 Label   = np.load("data/Label.npy")
 
+
 Validation_Feature, Test_Feature , Validation_Label, Test_Labelt = train_test_split(
     Feature, Label, stratify=Label, test_size = siz_Test, random_state = seed)
 
@@ -234,6 +235,20 @@ for i in np.unique(Validation_Label):
     print("Clase {} numero de instancias: {}".format(i,len(np.where(Validation_Label == i)[0])))
 
 print()
+
+
+# Eliminar las instancias donde la duración vale 0
+
+durationIndex = 10
+
+removeIndices = np.where( Validation_Feature[:,durationIndex] == 0 )[0]
+Validation_Feature = np.delete( Validation_Feature, removeIndices, axis = 0 )
+Validation_Label = np.delete( Validation_Label, removeIndices, axis = 0 )
+
+removeIndices = np.where( Test_Feature[:,durationIndex] == 0 )[0]
+Test_Feature = np.delete( Test_Feature, removeIndices, axis = 0 )
+Test_Labelt = np.delete( Test_Labelt, removeIndices, axis = 0 )
+
 
 #############################Valores Perdidos###############################
 
@@ -273,10 +288,14 @@ indices = np.argsort(importance)
 
 indices = indices[np.where(importance > 0.05)]
 
+print( "Índices: {}".format( indices ) )
+
 prediction = rfc.predict(Xres)
 prediction_index = np.where(Yres == prediction)[0]
 prediction_index = prediction_index.reshape(-1)
 indices = indices.reshape(-1)
+
+print( indices )
 
 Xres = Xres[prediction_index,:]
 Xres = Xres[:,indices]
@@ -284,22 +303,27 @@ Yres = Yres[prediction_index]
 
 ##########################################################################
 
+print( Xres[:,2].mean() )
 
 ######Pipe donde incluimos Escalado y Modelo##########
 pipe = Pipeline([('Model',SVC(max_iter=maxiter))])
 grid = GridSearchCV(pipe, param_grid=parameters, cv=splits)
 
 
+"""
 #####Ajustado de los datos####
 grid.fit(Xres, Yres)
 Save(grid,saveName) #Guardado del modelo para un uso más rapido en futuros momentos
 
+"""
 
 ####Impresion de los datos####
 print("Mejor valor de la cross validation: {:.4f}".format(grid.best_score_))
 print("Mejores parametros: {}".format(grid.best_params_))
+
 """
 """
+
 """
 print("Valor en el test:")
 print(classification_report(Test_Label, grid.predict(Test_Feature)))
