@@ -288,14 +288,10 @@ indices = np.argsort(importance)
 
 indices = indices[np.where(importance > 0.05)]
 
-print( "Índices: {}".format( indices ) )
-
 prediction = rfc.predict(Xres)
 prediction_index = np.where(Yres == prediction)[0]
 prediction_index = prediction_index.reshape(-1)
 indices = indices.reshape(-1)
-
-print( indices )
 
 Xres = Xres[prediction_index,:]
 Xres = Xres[:,indices]
@@ -303,19 +299,16 @@ Yres = Yres[prediction_index]
 
 ##########################################################################
 
-print( Xres[:,2].mean() )
 
 ######Pipe donde incluimos Escalado y Modelo##########
 pipe = Pipeline([('Model',SVC(max_iter=maxiter))])
 grid = GridSearchCV(pipe, param_grid=parameters, cv=splits)
 
 
-"""
 #####Ajustado de los datos####
 grid.fit(Xres, Yres)
 Save(grid,saveName) #Guardado del modelo para un uso más rapido en futuros momentos
 
-"""
 
 ####Impresion de los datos####
 print("Mejor valor de la cross validation: {:.4f}".format(grid.best_score_))
