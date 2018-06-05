@@ -184,7 +184,7 @@ def Imputation( X ):
 
 #
 
-def plot_Importance( rfc, Xres ):
+def plot_Importance( rfc ):
     importance = rfc.feature_importances_
     indices = np.argsort(importance)
 
@@ -277,19 +277,19 @@ Features = np.load( "data/Feature.npy" )
 Labels   = np.load( "data/Label.npy" )
 
 
-# Eliminar las instancias donde la característica Duración vale 0
-
-durationIndex = 10
-removeIndices = np.where( Features[:,durationIndex] == 0 )[0]
-Features = np.delete( Features, removeIndices, axis = 0 )
-Labels = np.delete( Labels, removeIndices, axis = 0 )
-
-
 # Separación del conjunto en train y test
 
 X_train, X_test , y_train, y_test = train_test_split(
     Features, Labels, stratify=Labels, test_size = siz_Test, random_state = seed)
 
+
+
+# Eliminar las instancias donde la característica Duración vale 0
+
+durationIndex = 10
+removeIndices = np.where( X_train[:,durationIndex] == 0 )[0]
+X_train = np.delete( X_train, removeIndices, axis = 0 )
+y_train = np.delete( y_train, removeIndices, axis = 0 )
 
 # Codificar las clases con índices numéricos.
 # En el conjunto original aparecen como 'yes' y 'no'
@@ -344,14 +344,6 @@ sm = SMOTE( ratio = 'minority', random_state = seed, k_neighbors = 3 )
 Xres, Yres = sm.fit_sample( X_train, y_train )
 
 
-print()
-print( "Tras el reequilibrado de clases:" )
-print( "Dimensiones de la nueva matriz:{},     Dimensión de las etiquetas:{}".format(Xres.shape,X_train.shape))
-for i in np.unique( Yres ):
-    print( "Número de instancias en la clase {}: {}".format( i, len ( np.where( Yres == i )[0] ) ) )
-print()
-
-
 # Creación y ajuste del modelo de aprendizaje Random Forest
 
 rfc = RandomForestClassifier(
@@ -366,8 +358,10 @@ rfc = RandomForestClassifier(
 
 print( "Scorer al evaluar sobre el conjunto de aprendizaje: {}".format( rfc.score( X_train, y_train ) ) )
 
+plot_Importance(rfc=rfc)
+plt.show()
 
-#
+#Aquellos donde RandomForestClassifier no se equivoca
 
 importance = rfc.feature_importances_
 indices = np.argsort( importance )
@@ -382,38 +376,24 @@ indices = indices.reshape( -1 )
 Xres = Xres[prediction_index,:]
 Xres = Xres[:,indices]
 Yres = Yres[prediction_index]
-print(Yres.shape)
-print(Xres.shape)
 
-Dataframe = np.append(Xres, Yres[:,None], axis=1)
-#Dataframe = Xres
-df = pd.DataFrame(Dataframe,columns=['col1','col2','col3','col4','Res'])
-sns.pairplot(df,hue='Res')
-plt.show()
 
 ##########################################################################
 
-plot_ROC_multiclass(Test_Feature, Test_Label, rbf)
+plot_ROC_multiclass(X_test, y_test, rfc)
 plt.show()
 
-
-
-<<<<<<< Updated upstream
 # Pipe donde incluimos Escalado y Modelo
-=======
 ######Pipe donde incluimos Escalado y Modelo##########
-pipe = Pipeline([('Model',SVC(max_iter=maxiter))])
-grid = GridSearchCV(pipe, param_grid=parameters, cv=splits, verbose=2, n_jobs=-1)
->>>>>>> Stashed changes
 
 pipe = Pipeline( [ ( 'Model', SVC( max_iter = maxiter ) ) ] )
-grid = GridSearchCV( pipe, param_grid = parameters, cv = splits )
-
-<<<<<<< Updated upstream
+grid = GridSearchCV( pipe, param_grid = parameters, cv = splits, verbose=2, n_jobs=-1 )
 
 # Ajuste de los datos
 
-grid.fit( Xres, Yres )
+with warnings.catch_warnings(): #Catch conversion warnings
+    warnings.simplefilter("ignore")
+    grid.fit(Xres, Yres)
 
 
 # Guardado del modelo para un uso más rápido en futuros momentos
@@ -427,45 +407,6 @@ Save( grid, saveName )
 
 print( "Mejor valor de la cross validation: {:.4f}".format( grid.best_score_ ) )
 print( "Mejores parámetros: {}".format( grid.best_params_ ) )
-=======
-#####Ajustado de los datos####
-with warnings.catch_warnings(): #Catch conversion warnings
-    warnings.simplefilter("ignore")
-    grid.fit(Xres, Yres)
-
-Save(grid,saveName) #Guardado del modelo para un uso más rapido en futuros momentos
->>>>>>> Stashed changes
-
-plot_ROC_multiclass(Test_Feature, Test_Label, grid)
-plt.show()
-
-plot_confusion_matrix(confusion_matrix(Validation_Label,grid.predict(Validation_Feature)),
-                      cls_nam,
-                      normalize=True)
-plt.show()
-
-
-<<<<<<< Updated upstream
-"""
-=======
-####Impresion de los datos####
-print("Mejor valor de la cross validation: {:.4f}".format(grid.best_score_))
-print("Mejores parametros: {}".format(grid.best_params_))
-
-"""
-svm = SVC(max_iter=maxiter, decision_function_shape='ovo', C=1.0, kernel='rbf').fit(Xres,Yres)
-print("Resultado fuera en validacion {}".format(svm.score(Validation_Feature[:,indices], Validation_Label)))
-plot_confusion_matrix(confusion_matrix(Validation_Label,svm.predict(Validation_Feature[:,indices])),
-                      ["clase 0","clase 1"],
-                      normalize=False)
-plt.show()
-
-print("Valor en el test:")
-print(classification_report(Test_Label, grid.predict(Test_Feature)))
->>>>>>> Stashed changes
-
-print( "Valor en el test:" )
-print( classification_report( y_test, grid.predict( X_test ) ) )
 
 
 cls_nam = np.unique( y_train )
@@ -476,12 +417,14 @@ plot_confusion_matrix(
 )
 plt.show()
 
-plot_confusion_matrix(
-    confusion_matrix( y_train, grid.predict( X_train ) ),
-    cls_nam,
-    normalize = True
-)
-plt.show()
+print( "Valor en el test:" )
+print( classification_report( y_test, grid.predict( X_test ) ) )
+
+"""
+####Impresion de los datos####
+print("Mejor valor de la cross validation: {:.4f}".format(grid.best_score_))
+print("Mejores parametros: {}".format(grid.best_params_))
+
 
 plot_ROC_multiclass( X_test, y_test, grid )
 plt.show()
