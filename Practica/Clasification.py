@@ -29,6 +29,7 @@ import itertools # Necesaria para el dibujo de la matriz y la curva ROC
 from scipy import interp # Necesario para la curva ROC
 import os # Necesario para buscar archivos
 import pandas as pd
+import seaborn as sns
 
 # Advertencias mostradas por pantalla
 
@@ -381,15 +382,34 @@ indices = indices.reshape( -1 )
 Xres = Xres[prediction_index,:]
 Xres = Xres[:,indices]
 Yres = Yres[prediction_index]
+print(Yres.shape)
+print(Xres.shape)
+
+Dataframe = np.append(Xres, Yres[:,None], axis=1)
+#Dataframe = Xres
+df = pd.DataFrame(Dataframe,columns=['col1','col2','col3','col4','Res'])
+sns.pairplot(df,hue='Res')
+plt.show()
 
 ##########################################################################
 
+plot_ROC_multiclass(Test_Feature, Test_Label, rbf)
+plt.show()
 
+
+
+<<<<<<< Updated upstream
 # Pipe donde incluimos Escalado y Modelo
+=======
+######Pipe donde incluimos Escalado y Modelo##########
+pipe = Pipeline([('Model',SVC(max_iter=maxiter))])
+grid = GridSearchCV(pipe, param_grid=parameters, cv=splits, verbose=2, n_jobs=-1)
+>>>>>>> Stashed changes
 
 pipe = Pipeline( [ ( 'Model', SVC( max_iter = maxiter ) ) ] )
 grid = GridSearchCV( pipe, param_grid = parameters, cv = splits )
 
+<<<<<<< Updated upstream
 
 # Ajuste de los datos
 
@@ -407,9 +427,42 @@ Save( grid, saveName )
 
 print( "Mejor valor de la cross validation: {:.4f}".format( grid.best_score_ ) )
 print( "Mejores parámetros: {}".format( grid.best_params_ ) )
+=======
+#####Ajustado de los datos####
+with warnings.catch_warnings(): #Catch conversion warnings
+    warnings.simplefilter("ignore")
+    grid.fit(Xres, Yres)
 
+Save(grid,saveName) #Guardado del modelo para un uso más rapido en futuros momentos
+>>>>>>> Stashed changes
+
+plot_ROC_multiclass(Test_Feature, Test_Label, grid)
+plt.show()
+
+plot_confusion_matrix(confusion_matrix(Validation_Label,grid.predict(Validation_Feature)),
+                      cls_nam,
+                      normalize=True)
+plt.show()
+
+
+<<<<<<< Updated upstream
+"""
+=======
+####Impresion de los datos####
+print("Mejor valor de la cross validation: {:.4f}".format(grid.best_score_))
+print("Mejores parametros: {}".format(grid.best_params_))
 
 """
+svm = SVC(max_iter=maxiter, decision_function_shape='ovo', C=1.0, kernel='rbf').fit(Xres,Yres)
+print("Resultado fuera en validacion {}".format(svm.score(Validation_Feature[:,indices], Validation_Label)))
+plot_confusion_matrix(confusion_matrix(Validation_Label,svm.predict(Validation_Feature[:,indices])),
+                      ["clase 0","clase 1"],
+                      normalize=False)
+plt.show()
+
+print("Valor en el test:")
+print(classification_report(Test_Label, grid.predict(Test_Feature)))
+>>>>>>> Stashed changes
 
 print( "Valor en el test:" )
 print( classification_report( y_test, grid.predict( X_test ) ) )
