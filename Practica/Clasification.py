@@ -79,52 +79,24 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Matriz de Confusi
 
 # Gráficas de la curva ROC multiclase
 
-def plot_ROC_multiclass(XTest, YTest, clf ):
+def plot_ROC(XTest, YTest, clf, Labels ):
 
-    YTest = preprocessing.label_binarize(YTest, np.unique(YTest))
-    n_classes = YTest.shape[1]
-    YScor = clf.decision_function(XTest)
-    lw = 2
+    row = np.where( YTest == i )
 
-    fpr = dict()
-    tpr = dict()
-
-    for i in range(n_classes):
-        fpr[i], tpr[i], _ = roc_curve(YTest[:,i], YScor[:,i])
-
-    fpr["Micro"], tpr["Micro"], _ = roc_curve(YTest.ravel(), YScor.ravel())
-
-    all_fpr = np.unique(np.concatenate([fpr[i] for i in range(n_classes)]))
-    mean_tpr = np.zeros_like(all_fpr)
-
-    for i in range(n_classes):
-        mean_tpr += interp(all_fpr, fpr[i], tpr[i])
-
-    #Media de los datos
-    mean_tpr /= n_classes
-    fpr["Macro"] = all_fpr
-    tpr["Macro"] = mean_tpr
+    fpr, tpr, thresholds = roc_curve( YTest, clf.predict_proba(XTest)[:,Labels], pos_label=Labels )
 
     plt.figure()
-    plt.plot(fpr["Micro"],tpr["Micro"],
-             label='Media a la baja',
+    plt.plot(fpr,tpr,
+             label='ROC modelo',
              color='deeppink', linestyle=':', linewidth=4)
 
-    plt.plot(fpr["Macro"],tpr["Macro"],
-             label='Media a la alta',
-             color='navy', linestyle=':', linewidth=4)
 
-    colors = itertools.cycle(['aqua', 'darkorange', 'cornflowerblue', 'lime', 'crimson', 'lightpink', 'darkgreen', 'salmon', 'sienna', 'bisque'])
-    for i, color in zip(range(n_classes), colors):
-        plt.plot(fpr[i],tpr[i], color=color, lw=lw,
-                 label='ROC class {}'.format(i))
-
-    plt.plot([0,1],[0,1],'k--',lw=lw)
+    plt.plot([0,1],[0,1],'k--',lw=2)
     plt.xlim([0.0,1.0])
     plt.ylim([0.0,1.05])
     plt.xlabel('Falsos Positivos')
     plt.ylabel('Verdaderos Positivos')
-    plt.title('ROC multiclase')
+    plt.title('ROC curve')
     plt.legend(loc="lower right")
     pass
 
@@ -276,6 +248,14 @@ np.set_printoptions( formatter = { 'float': lambda x : "{0:0.4f}".format( x ) } 
 Features = np.load( "data/Feature.npy" )
 Labels   = np.load( "data/Label.npy" )
 
+# Tratamiento de valores perdidos
+
+missings = np.where( Features == 'unknown' )
+print( "Cantidad de valores perdidos: {}".format( len( missings[1] ) ) )
+print( "Distribucion:" )
+Features = Imputation( Features )
+missings = np.where( Features == 'unknown' )
+print( "Valores perdidos tras el procesamiento: {}".format( len( missings[1] ) ) )
 
 # Separación del conjunto en train y test
 
@@ -294,12 +274,20 @@ y_train = np.delete( y_train, removeIndices, axis = 0 )
 # Codificar las clases con índices numéricos.
 # En el conjunto original aparecen como 'yes' y 'no'
 
-y_train = preprocessing.LabelEncoder().fit_transform( y_train )
+Le = preprocessing.LabelEncoder().fit( y_train )
+
+index_of_positive = np.where(Le.classes_ == 'yes')[0]
+
+print("INDEX::::::::::::::{}".format(index_of_positive[0]))
+
+y_train = Le.transform(y_train)
+y_test = Le.transform(y_test)
 
 for i in np.unique( y_train ):
-    print( "Número de instancias en la clase {}: {}"
-        .format( i, len( np.where( y_train == i )[0] ) )
+    print( "Número de instancias en la clase {}: {}  {}"
+        .format( i, len( np.where( y_train == i )[0] ), len( np.where( y_test == i )[0] ) )
     )
+
 print()
 
 
@@ -318,25 +306,20 @@ parameters = [{
 ### Preprocesado de los datos ###
 
 # Normalización de las características numéricas
+SS = preprocessing.StandardScaler().fit( X_train[:,numericAttributes] )
+X_train[:,numericAttributes] = SS.transform( X_train[:,numericAttributes] )
+X_test[:,numericAttributes] = SS.transform( X_test[:,numericAttributes] )
 
-X_train[:,numericAttributes] = preprocessing.StandardScaler().fit( X_train[:,numericAttributes] ).transform( X_train[:,numericAttributes] )
-
-# Tratamiento de valores perdidos
-
-missings = np.where( X_train == 'unknown' )
-print( "Cantidad de valores perdidos: {}".format( len( missings[1] ) ) )
-print( "Distribucion:" )
-X_train = Imputation( X_train )
-missings = np.where( X_train == 'unknown' )
-print( "Valores perdidos tras el procesamiento: {}".format( len( missings[1] ) ) )
 
 # Binarización de características categóricas.
 # Usamos M.todense() para ver los datos en tamaño normal. Si no, se guardan en formato COOmatrix
 
-X_train = preprocessing.OneHotEncoder(
+OHE = preprocessing.OneHotEncoder(
     categorical_features = categoricalAttributes,
     handle_unknown = 'ignore'
-    ).fit_transform( X_train ).todense()
+    ).fit( X_train )
+X_train = OHE.transform(X_train).todense()
+X_test = OHE.transform(X_test).todense()
 
 # Equilibrado de representación de cada clase
 
@@ -361,6 +344,12 @@ print( "Scorer al evaluar sobre el conjunto de aprendizaje: {}".format( rfc.scor
 plot_Importance(rfc=rfc)
 plt.show()
 
+print()
+print( "Valor en el test:" )
+print( classification_report( y_test, rfc.predict( X_test ) ) )
+plot_ROC(X_test, y_test, rfc, index_of_positive[0])
+plt.show()
+
 #Aquellos donde RandomForestClassifier no se equivoca
 
 importance = rfc.feature_importances_
@@ -379,9 +368,6 @@ Yres = Yres[prediction_index]
 
 
 ##########################################################################
-
-plot_ROC_multiclass(X_test, y_test, rfc)
-plt.show()
 
 # Pipe donde incluimos Escalado y Modelo
 ######Pipe donde incluimos Escalado y Modelo##########
@@ -411,14 +397,17 @@ print( "Mejores parámetros: {}".format( grid.best_params_ ) )
 
 cls_nam = np.unique( y_train )
 plot_confusion_matrix(
-    confusion_matrix( y_test, grid.predict( X_test ) ),
+    confusion_matrix( y_test, grid.predict( X_test[:,indices] ) ),
     cls_nam,
-    normalize = True
+    normalize = False
 )
 plt.show()
 
+print()
 print( "Valor en el test:" )
 print( classification_report( y_test, grid.predict( X_test ) ) )
+plot_ROC(X_test, y_test, grid, index_of_positive[0])
+plt.show()
 
 """
 ####Impresion de los datos####
