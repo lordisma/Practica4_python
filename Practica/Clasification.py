@@ -148,8 +148,6 @@ def Imputation( X ):
         Train_Label = Label[normal_row].astype(np.int64)
         Knn.fit(Caracteristicas[normal_row,:],Train_Label)
         X[row_miss,i] = Knn.predict(Caracteristicas[row_miss,:])
-        print("{}:Tamaño conjunto de Test: {}".format(i,Test_Label.shape))
-        print("X: {}: :Caracteristicas: {}".format(X.shape,Caracteristicas.shape))
 
     return X
 
@@ -278,8 +276,6 @@ Le = preprocessing.LabelEncoder().fit( y_train )
 
 index_of_positive = np.where(Le.classes_ == 'yes')[0]
 
-print("INDEX::::::::::::::{}".format(index_of_positive[0]))
-
 y_train = Le.transform(y_train)
 y_test = Le.transform(y_test)
 
@@ -326,10 +322,16 @@ X_test = OHE.transform(X_test).todense()
 sm = SMOTE( ratio = 'minority', random_state = seed, k_neighbors = 3 )
 Xres, Yres = sm.fit_sample( X_train, y_train )
 
+print ("Tras el equilibrado con SMOTE:{}".format(sm.get_params()))
+for i in np.unique( y_train ):
+    print( "Número de instancias en la clase {}: {}  {}"
+        .format( i, len( np.where( y_train == i )[0] ), len( np.where( y_test == i )[0] ) )
+    )
 
 # Creación y ajuste del modelo de aprendizaje Random Forest
 
 rfc = RandomForestClassifier(
+    random_state=seed,
     n_estimators = 50,
     n_jobs = -1,
     max_depth = 30,
@@ -381,7 +383,7 @@ Yres = Yres[prediction_index]
 # Pipe donde incluimos Escalado y Modelo
 ######Pipe donde incluimos Escalado y Modelo##########
 
-pipe = Pipeline( [ ( 'Model', SVC( max_iter = maxiter ) ) ] )
+pipe = Pipeline( [ ( 'Model', SVC( max_iter = maxiter, probability=True, random_state=seed ) ) ] )
 grid = GridSearchCV( pipe, param_grid = parameters, cv = splits, verbose=2, n_jobs=-1 )
 
 # Ajuste de los datos
@@ -414,8 +416,8 @@ plt.show()
 
 print()
 print( "Valor en el test:" )
-print( classification_report( y_test, grid.predict( X_test ) ) )
-plot_ROC(X_test, y_test, grid, index_of_positive[0])
+print( classification_report( y_test, grid.predict( X_test[:,indices] ) ) )
+plot_ROC(X_test[:,indices], y_test, grid, index_of_positive[0])
 plt.show()
 
 """
