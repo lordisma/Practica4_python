@@ -4,6 +4,10 @@
 
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\input{spanishAlgorithmic}
 
 % Ruta de las imágenes
 \usepackage{graphicx}
@@ -31,7 +35,7 @@
   \texttt{53583380G}
   \and
   Ismael Marín Molina\\
-  \texttt{AAAAAAAAB}
+  \texttt{50627728J}
 }
 
 \date{}
@@ -40,66 +44,152 @@
 
 \tableofcontents
 
+\pagebreak
+
 \section{Descripción del problema}
 
-Nuestro objetivo ha sido la obtención de un predictor que nos permita, dados los datos de un cliente de un banco, saber si es seguro permitir un préstamo a dicho cliente.
+Nuestro dataset se trataba de los datos recopilados de diferentes clientes del banco, para conocer su interes en un nuevo tipo de depósito lanzado.
 
-Para ello nos hemos servido de la base de datos Bank Marketing Data Set (BMDS), alojado en el repositorio de aprendizaje automático UCI en \texttt{https://archive .ics.uci.edu/ml/datasets/bank+marketing}.
-
-Hemos utilizado como modelo de aprendizaje el algoritmo Random Forest (RF) para generar el predictor, utilizando para ello su implementación en el framwork scikit-learn.
+Para ello nos hemos usado la base de datos Bank Marketing Data Set (BMDS), alojado en el repositorio de aprendizaje automático UCI en \texttt{https://archive .ics.uci.edu/ml/datasets/bank+marketing}.
 
 
 \section{Conjunto de datos utilizado}
 
-El conjunto BMDS consta de 41188 instancias, cada una correspondiente a los datos obtenidos por vía telefónica de los clientes de una institución bancaria portuguesa. Durante la extracción de datos no fue posible obtener todos de todos los clientes, y algunos fueron introducidos a partir de cierto momento, con la toma de datos ya iniciada, por lo que el conjunto de aprendizaje presenta valores nulos en ciertas características, que hemos codificado como la cadena \texttt{'numpy.NaN'} para que las funciones de scikit-learn sepan que se trata de valores nulos y puedan ignorarlos.
+El conjunto BMDS consta de 41188 instancias, cada una correspondiente a los datos obtenidos por vía telefónica de los clientes de una institución bancaria portuguesa. Durante la extracción de datos no fue posible obtener todo de todos los clientes, por lo que el conjunto de aprendizaje presenta valores nulos en ciertas características, representados por la cadena ``\texttt{unknown}'', este dataset también trae datos de otros años, pero nosotros nos hemos centrado en el año más actual, 2014.
 \\
 
-Los datos tomados por la entidad bancaria muestran 20 características de cada uno de sus clientes, teniendo en cuenta entre ellas los posibles valores nulos recién mencionados: (1) edad, (2) ocupación, (3) estado civil, (4) nivel de estudios, (5) crédito por defecto, (6) petición de un crédito inmobiliario, (7) petición de un crédito personal, (8) método de comunicación con el banco, (9) mes, (10) día de la semana y (11) duración de la última comunicación, (12) cantidad de contactos realizados con el banco, (13) días transcurridos desde el último contacto, (14) veces contactado antes de la campaña para la suscripción, (15) resultado de la campaña de suscripción anterior, (16) tasa de variación de empleo, (17) índice de precios de consumo, (18) índice de confianza de consumo, (19) euribor a tres meses, y (20) cantidad de empleados.
+Los datos tomados por la entidad bancaria muestran 20 características de cada uno de sus clientes, teniendo en cuenta entre ellas los posibles valores nulos recién mencionados: (1) edad, (2) ocupación, (3) estado civil, (4) nivel de estudios, (5) crédito por defecto, (6) petición de un crédito inmobiliario, (7) petición de un crédito personal, (8) método de comunicación con el banco, (9) mes, (10) día de la semana y (11) duración de la última comunicación ( si la duración de la conversación es 0, es decir no cogió el telefono, entonces se predice como ``no''), (12) cantidad de contactos realizados con el banco, (13) días transcurridos desde el último contacto, (14) veces contactado antes de la campaña para la suscripción, (15) resultado de la campaña de suscripción anterior, (16) tasa de variación de empleo, (17) índice de precios de consumo, (18) índice de confianza de consumo, (19) euribor a tres meses, y (20) cantidad de empleados. La característica a predecir es (21) Interés en el producto , tomando los valores ``si'' o ``no''.
 
-De estas características, las número (2), (3), (4), (5), (6), (7), (8), (9), (10) y (15) son categóricas, presentándose en formato cadena de texto, mientras que el resto toma valores numéricos dentro un intervalo. 
-\\
-
-Poe qué RF. Categóricos
-
-categóricos, numéricos
-
-Tratamiento que hemos tenido que hacer de los datos
-
+De estas características, las número (2), (3), (4), (5), (6), (7), (8), (9), (10) y (15) son categóricas, presentándose en formato cadena de texto, mientras que el resto son valores numéricos. 
 
 \section{Modelos empleados}
 
 \subsection{Random Forest}
 
-RF es un modelo de aprendizaje automático que se sirve de generar un conjunto de árboles de decisión durante la fase de aprendizaje para, durante la fase de predicción, realizar una predicción del dato de entrada pertinente en cada uno de los árboles de dicho conjunto y tomar como respuesta final la moda de las respuestas que han dado los árboles individuales.
+RF es un modelo de aprendizaje automático que usa un conjunto de árboles de decisión muy simples que van dado una predicción poco realista pero combinando las predicciones de todos los arboles que lo conforman da una predicción bastante buena, para combinar los datos en el caso concreto de los arboles de la \texttt{sklearn} para problemas de clasificación, usa el ``valor más votado''.
 
-Esto arroja una predicción más fiable que la de un solo árbol de decisión, pues disminuye drásticamente la probabilidad de que caigan en un sobreajuste durante el aprendizaje, problema que suele surgir al utilizar árboles de decisión aislados, sobre todo si el árbol es muy profundo. Los RF son también un modelo muy robusto ante datos con una muy alta varianza dentro del conjunto de aprendizaje.
+Esto arroja una predicción más fiable que la de un solo árbol de decisión, pues disminuye drásticamente la probabilidad de que caigan en un sobreajuste durante el aprendizaje, problema que suele surgir al utilizar árboles de decisión debido a la alta varianza que estos tienen.
 \\
-
-Con este modelo perdemos la ventaja que nos ofrecían los árboles de decisión simples de poder tener una explicación de por qué se ha predicho el valor que se ha predicho, pues, al aumentar el número de árboles resultantes en el RF, la explicación es tan extensa que deja de ser útil en la práctica.
-
 
 \subsection{Motivación para RF}
 
 La existencia de tantas características categóricas en nuestro conjunto de datos ha sido un gran motivador de la elección del modelo de aprendizaje RF, por ser los árboles de decisión, maquinaria interna de la predicción realizada por un RF, especialmente potentes para realizar predicciones tomando valores categóricos, pues la naturaleza discreta de sus ramificaciones se acopla muy bien a atributos cuyo dominio no sea continuo.
 \\
 
-Otro factor que ha influido en nuestra decisión de utilizar RF para tratar los ejemplos contenidos en la base de datos BMDS es que nuestro problema consistiese en realizar una clasificación. Al igual que lo mencionado en el párrafo anterior, los árboles de decisión son un modelo de aprendizaje automático de equivalencia directa con un problema de clasificación, pues cada una de sus ramas equivale a ofrecer una respuesta discreta a una pregunta. Todos sus nodos son, por tanto, clasificadores, y todas sus hojas corresponden a una clasificación del dato de entrada.
+Otro factor que ha influido en nuestra decisión de utilizar RF es que a diferencia del resto de modelos, RF (más concretamente Decisión Tree) nos da aquellas características que más efecto han tenido a la hora de clasificar el problema, lo cual analizando la naturaleza comercial de nuestro problema creemos es algo muy significativo.
+\\
 
+El último motivo es que los RF nos darán una aproximación muy buena del modelo con una capacidad de computo más reducida.
 
+\subsection{Support Vector Machine}
+
+El modelo SVM es un modelo el cual se basa en encontrar la mejor separación posible entre las distintas clases, para ello se apoya en la busqueda de aquellas instancias que definan el ``pasillo'' existente entre las distintas clases.\\
+
+Para la creación de esta separación, conociendo que la mayoría de datos reales no son separables de forma lineal, usa una transformación de los valores con el uso de una función la cual elegimos nosotros mismos, esta función es llamada kernel.
+
+\subsection{Motivación para SVM}
+
+Hemos pensado en el uso del SVM al tratarse de un problema de clasificación binaria, con la precensia de muchos características reales, podría funcionar correctamente. También decir que este modelo era recomendado en la descripción del dataset.
+
+\subsection{Combinación de modelos}
+
+Como último modelo hemos provado una combinación de ambos modelos antes mencionados, para ello hemos actuado de la siguiente forma y con el con siguiente razonamiento.\\
+
+Hemos usado RF para iniciar una primera aproximación del error en la muestra de training, en aquellas instancias en las que RF haya fallado, quiere decir que la mayoría de los arboles usados en este han mal clasificado la instancia, entonces hemos decidido quitarla al tomandola como una instancia ruidosa y reduciendo la dimensión del conjunto de entrenamiento que será pasado a SVM.\\
+
+Haciendo uso del RF que ya tenemos entrenado y conociendo la capacidad explicativa de este modelo, hemos obtenido las características más relevantes para la clasificación y estas, y solo estas han sido las utilizadas para entrenar el modelo SVM.\\
+
+Con esta combinación de los modelos hemos podido explotar más las capacidades del SVM y crear un modelo más acertado. 
+\pagebreak
 \section{Desarrollo de la clasificación}
 
 \subsection{Tratamiento de los datos}
 
-Ha sido necesario un preprocesamiento de los datos facilitados por BMDS para su correcto tratamiento por las funciones implementadas en el framework scikit-learn. Primero ha sido necesario modificar por \texttt{'numpy.NaN'} los valores nulos de las entradas. Después hemos aplicado SMOTE para un correcto equilibrio entre instancias de cada clase, tras ello una codificación one-hot para transformar las características categóricas de tipo cadena de texto en valores numéricos discretos y finalmente una normalización de las características numéricas.
-\\
+Ha sido necesario un preprocesamiento de los datos facilitados por BMDS para su correcto tratamiento por las funciones implementadas en el framework scikit-learn. Primero ha sido necesario arreglar los valores perdidos. Después hemos corregido el desbalanceo entre instancias de cada clase, tras ello una codificación de las características categóricas y finalmente una estandarización de las características numéricas. Esto ha sido realizado tanto en la partición de training como en la de test, las cuales han sido divididas en un 70\% del tamaño para Training y Validación y un 30\% para el test.
 
-Para generar la base de datos BMDS, como hemos mencionado anteriormente, no ha sido posible obtener todos los datos requeridos de todos los clientes, en ocasiones ni tras haber realizado el banco varios contactos con un mismo cliente. Es por ello que hay valores desconocidos, que están registrados como la cadena de texto \texttt{'unknown'}. Esto tiene una semántica implícita muy clara, pero los modelos de scikit-learn utilizan otra convención, consistente en etiquetar con la constante \texttt{NaN}, de la biblioteca \texttt{numpy}, todos los valores que queramos que sean ignorados. Es por ello que una primera transformación que hemos hecho de los datos ha sido modificar todos los \texttt{'unknown'} por \texttt{numpy.NaN}.
-\\
+\subsubsection{Valores Perdidos}
+Cuando se genero la base de datos BMDS, como hemos mencionado anteriormente, no fue posible obtener todos los datos requeridos de todos los clientes, en ocasiones ni tras haber realizado el banco varios contactos con un mismo cliente. Es por ello que hay valores desconocidos, que están registrados como la cadena de texto \texttt{'unknown'}. Esto tiene una semántica implícita muy clara, pero los modelos de \texttt{scikit-learn} no son capaces de diferenciarla del resto de valores posibles, por eso hemos tenido que tratarlas a mano.\\
 
-Lo siguiente que hemos aplicado ha sido SMOTE, siglas de Synthetic Minority Over-sampling Technique. Es una técnica utilizada en conjuntos donde las representaciones de cada clase no están equilibradas. En BMDS, de las 41188 instancias facilitadas, 36548 pertenecen a la clase negativa y solo 4640 a la clase positiva, cuando lo ideal es que hubiese habido una representación aproximadamente equitativa de ambas clases. Esta descompensación tan grande, donde un 89 \% de los datos pertenece a una de las dos clases y solo el 11 \% pertenece a la otra, puede causar problemas en el aprendizaje, por lo que ha sido necesario utilizar un método de equilibrado de participación de instancias de cada clase. Por suerte o por desgracia, una representación tan descompensada es una situación común en los casos reales, hecho que ha motivado el surgimiento de herramientas que palien este problema, como lo es de la que nos hemos servido, SMOTE.
+Inicialmente hemos hecho un conteo del número de valores perdidos en cada característica, para comprobar como estabán distribuidas en nuestro data set, el resultado fue el siguiente:\\
+
+
+\begin{table}[]
+\centering
+\caption{Distribucion valores perdidos}
+\label{valores perdidos}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+Ocupación                     & Estado C.                    & Nivel Estudios               & Crédito por defecto           & PCI                          & PCP                          \\ \hline
+\multicolumn{1}{|c|}{0.801\%} & \multicolumn{1}{c|}{0.194\%} & \multicolumn{1}{c|}{4.202\%} & \multicolumn{1}{c|}{20.872\%} & \multicolumn{1}{c|}{2.403\%} & \multicolumn{1}{c|}{2.403\%} \\ \hline
+\end{tabular}
+\end{table}
+
+Como podemos comprobar en la tabla \ref{valores perdidos} la mayoría de estos se concentraban en la columna del Crédito por defecto. Con una menor representación tenemos las columnas de prestamó de credito inmobiliario (PCI) y prestamó de credito personal (PCP), junto con el nivel de Estudios, con una menor cantidad tenemos la ocupación y el estado civil.\\
+
+Para realizar la imputación de estos valores perdidos de la manera más eficaz posible sin realizar un excesivo computo hemos dividido los valores perdidos entre aquellos que tenián un más de un 1\% de los valores de su clase perdidos y los que tenían menos.\\
+
+Aquellos con menos de esta cantidad hemos decidido imputarlo usando el valor más frecuente, el cual nos parece un mejor estimador de la realidad de la población que la media o mediana.\\
+
+El resto hemos decidido usar una táctica más sofisticada imputandolos haciendo uso de un 3-NN, para predecir cual será su valor. Para ello hemos separado los datos según si tenian o no el valor, hemos entrenado el modelo con los datos que no tenian valores perdidos y hemos cambiado los ``unknown'' por los valores predecidos por el modelo.
+
+Solucionando los 12718 valores perdidos que teniamos    
+
+\subsubsection{Desbalanceo del modelo}
+
+En BMDS, de las 41188 instancias facilitadas, 36548 pertenecen a la clase negativa y solo 4640 a la clase positiva, cuando lo ideal es que hubiese habido una representación aproximadamente equitativa de ambas clases.\\
+Tras el tratamiento de los valores perdidos hemos comprobado en el conjunto de training un fuerte desbalanceo entre ambas clases, este desbalanceo provoca que el modelo no pueda predecir bien la clase minoritaría, lo cual hace que aunque la calidad del modelo parezca acertada, la realidad es que en la minoritaría el acierto es mínimo. En nuestro caso el modelo acertaba el 95\%
+de las pertenecientes a la clase 0 pero solo el 50\% de aquellas que estaban en la clase 1.\\
+
+\begin{figure}[H]
+
+\includegraphics[scale = 0.5]{Matrix_de_Confucion_Imbalanceado.png}
+\centering
+\caption{Matriz de Confusión Desbalanceada}
+\label{MCDesbalanceada}
+\end{figure}
+
+Para solucionar esto hemos usado el algoritmo SMOTE, siglas de Synthetic Minority Over-sampling Technique. Es una técnica utilizada en conjuntos donde las representaciones de cada clase no están equilibradas.
 
 Los desarrolladores de SMOTE han estudiado este problema, y su herramienta, en lugar de únicamente reducir la cantidad de instancias de la clase mayoritaria, en nuestro casos los \texttt{'no'}, hasta alcanzar una representación equitativa, ofrecen un método con el que aumentar la cantidad de instancias de la clase minoritaria. Esto es importante, pues tratar únicamente la poda de instancias negativas habría llevado a aumentar significativamente el comportamiento de nuestro predictor para favorecer los casos positivos más de lo deseado. Para aumentar la cantidad de instancias de la clase minoritaria se han servido de métodos sintéticos de generación de instancias. Según los estudios que han realizado, tanto con Ripper como con clasificadores bayesianos ingenuos, los resultados han sido mucho más fructíferos al aplicar a conjuntos no equilibrados este tipo de poda y generación que al aplicarle únicamente podas.
 \\
+El algoritmo SMOTE funciona creando ejemplos sintéticos de la clase minoritaría para equilibrar ambas clases, para ello usa un KNN interno el cual toma los KNN vecinos más cercanos y genera un ejemplo usando alguno de ellos. El pseudocódigo de este algoritmo es el siguiente, sacado del paper presentado por Nitesh V. Chawla y Kevin W Bowyer en 2002:
+
+\begin{algorithm}
+\begin{algorithmic}[1]
+\REQUIRE $T =$ Poblacion de la menor clase ,$N=$ numero de ejemplos sinteticos, $k=$ numero de elementos del kNN. \label{lin:lineaRara}
+\ENSURE Array con los ejemplos sinteticos.
+\FORALL{ $i \in T$}
+\STATE Computamos los $k$ vecinos más cercanos y guardamos el indice en $nnarray$.\\
+\STATE Populate($N$, i, $nnarray$)
+\ENDFOR
+\WHILE {$N \neq 0$}
+\STATE Elegimos un vecino aleatorio de la instancia $i$
+\FORALL{Atributo en el ejemplo $i$}
+\STATE Compute: $dif = Sample[nnarray][nn][attr] - Sample[i][attr]$
+\STATE Compute: $gap = $ random number entre 0 y 1
+\STATE Compute: $Synthetic[newindex][attr] = Sample[i][attr] + gap*dif$
+\ENDFOR
+\STATE $newindex ++$
+\STATE $N --$
+\ENDWHILE
+\RETURN Population Synthetic
+\end{algorithmic}
+\caption{SMOTE}\label{alg:Smote}
+\end{algorithm}
+
+La implementación de este algoritmo hemos usado la librería \texttt{imbalanced learn}, con los parametrós de $k = 3$ y usar la función de creación \texttt{borderline 1}. La cual es la función descrita en el pseudocódigo.\\ 
+
+Las clases han sido equilibradas hasta igualar ambas dejando un total de 48818 instancias en el conjunto de training. Tras volver a realizar la matriz de confución del conjunto de entrenamiento estos son los nuevos resultados obtenidos.\\
+
+\begin{figure}[H]
+
+\includegraphics[scale = 0.5]{Matrix_de_Confucion_Balanceado.png}
+\centering
+\caption{Matriz de Confusión Balanceada}
+\label{MCBalanceada}
+\end{figure}
+
+\subsubsection{Valores Categóricos}
 
 Otra convención que utiliza scikit-learn es utilizar valores numéricos enteros para la codificación de variables categóricas. Los valores de catacterísticas catagóricas de BMDS están codificadas todas como cadenas de texto, por lo que ha sido necesaria una conversión. Para ello hemos utilizado el codificador one-hot, implementado también dentro de scikit-learn. 
 
@@ -111,8 +201,24 @@ La solución que ofrece la codificación one-hot, crear una nueva característica p
 
 Este proceso se conoce también como binarización de una variable categórica, donde se convierte una variable con $n$ posibles valores en algún dominio en $n$ variables binarias.
 
-%\includegraphics[scale=0.48]{grado.png}
+\subsection{Toma de hiperparámetros}
 
+Para determinar los mejores hiperparámetros hemos usado el metalgoritmo de la \texttt{metrics.gridSearch}, el determinamos los parametros a probar con los distintos modelos en el conjunto de entrenamiento y nos devolverá aquella combinación de parámetros que mejores resultados nos den. En el caso del RF no era necesario realizarle una Cross Validation para comprobar el error ya que el internamente usa el método de bagging para estimar el error que se obtendrá, por tanto hemos provado a base de ensayo y error con distintas combinaciones de parámetros.\\
 
+En el caso de la SVM los parámetros en los que nos hemos interesado han sido en la regularización, el kernel y la función de decisión. Los mejores valores se han encontrado con una regularización tipo Lasso y con la función de kernel 
+squared-exponential kernel (RBF) con la siguiente fórmula.
+
+\begin{equation}
+k_{SE}(x_{i}, x_{j}) = \sigma^{2} \exp{\frac{ (x_{i} - x_{j})^{2} }{ 2l^{2}}}
+\label{eq:RBF}
+\end{equation}
+
+donde $l$ es el rango máximo de los datos, y $\sigma$ determina la distancia entre la media de tu función y la de la población.\\
+
+Para el caso del RF hemos probado incrementando el número de arboles en la decisión, y las distintas funciones para estimar las variables que tomara cada arbol para ramificar. En el número de arbol vimos que con 50 obteniamos resultados parecidos a usar 100 o 150 pero la capacidad de computó era menor por tanto decidimos que darnos con los 50 arboles. En el máximo de características tomamos $\sqrt{p}$ y $\log{p}$ encontrando los mejores resultados con el primero de ellos. 
+
+\pagebreak
+
+\section{Resultados}
 
 \end{document}
