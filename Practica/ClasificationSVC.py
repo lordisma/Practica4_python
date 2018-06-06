@@ -4,6 +4,24 @@
     File name: Classification.py
     Author: Ismael Marín Molina, and Manuel Herrera Ojea
     Python Version: 3.5
+
+    Imágenes para explicar SMOTE y one-hot encoder
+    Matriz de confusión. No predecía nunca bien la clase 1, y tras el balanceo sí.
+    Qué características ha elegido
+        La más importante fue Duration
+    Explicar la imputación. Un 1% de los datos de la columna o más como valores perdidos
+
+    Ensamble RF con SVM, quitándole los deDuracion 0, y quitando donde RF se equivoca, ENN (eliminación de instancias),
+    88'97% de acierto media en cross validation.
+    Al no quitar Duración 0 81% de acierto
+
+    SVM sin el RF, sin quitarle Duración 0. Mejor con el GridSearchCV
+
+    Por que hemos optado por estos hiperpatámetros. Prueba y error
+
+    max features: sqrt y no log, 50 estimadores porque no cambiaba con 100 y con 150, mucho gasto computacional. Por debajo sí se nota cambio, a peor
+
+    SMOTE. K-NN de 3 para no mucho gasto computacional. Borderline = 1. Línea entre dos ejemplos, crea uno en la línea, Borderline dice cuán alejado de esa línea crea el nuevo.
 """
 
 
@@ -79,27 +97,52 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Matriz de Confusi
 
 # Gráficas de la curva ROC multiclase
 
-def plot_ROC(XTest, YTest, clf, Labels, type = False ):
+def plot_ROC_multiclass(XTest, YTest, clf ):
 
-    row = np.where( YTest == i )
+    YTest = preprocessing.label_binarize(YTest, np.unique(YTest))
+    n_classes = YTest.shape[1]
+    YScor = clf.decision_function(XTest)
+    lw = 2
 
-    if not type:
-        fpr, tpr, thresholds = roc_curve( YTest, clf.predict_proba(XTest)[:,Labels], pos_label=Labels )
-    else:
-        fpr, tpr, thresholds = roc_curve( YTest, clf.decision_function(XTest), pos_label=Labels )
+    fpr = dict()
+    tpr = dict()
+
+    for i in range(n_classes):
+        fpr[i], tpr[i], _ = roc_curve(YTest[:,i], YScor[:,i])
+
+    fpr["Micro"], tpr["Micro"], _ = roc_curve(YTest.ravel(), YScor.ravel())
+
+    all_fpr = np.unique(np.concatenate([fpr[i] for i in range(n_classes)]))
+    mean_tpr = np.zeros_like(all_fpr)
+
+    for i in range(n_classes):
+        mean_tpr += interp(all_fpr, fpr[i], tpr[i])
+
+    #Media de los datos
+    mean_tpr /= n_classes
+    fpr["Macro"] = all_fpr
+    tpr["Macro"] = mean_tpr
 
     plt.figure()
-    plt.plot(fpr,tpr,
-             label='ROC modelo',
+    plt.plot(fpr["Micro"],tpr["Micro"],
+             label='Media a la baja',
              color='deeppink', linestyle=':', linewidth=4)
 
+    plt.plot(fpr["Macro"],tpr["Macro"],
+             label='Media a la alta',
+             color='navy', linestyle=':', linewidth=4)
 
-    plt.plot([0,1],[0,1],'k--',lw=2)
+    colors = itertools.cycle(['aqua', 'darkorange', 'cornflowerblue', 'lime', 'crimson', 'lightpink', 'darkgreen', 'salmon', 'sienna', 'bisque'])
+    for i, color in zip(range(n_classes), colors):
+        plt.plot(fpr[i],tpr[i], color=color, lw=lw,
+                 label='ROC class {}'.format(i))
+
+    plt.plot([0,1],[0,1],'k--',lw=lw)
     plt.xlim([0.0,1.0])
     plt.ylim([0.0,1.05])
     plt.xlabel('Falsos Positivos')
     plt.ylabel('Verdaderos Positivos')
-    plt.title('ROC curve')
+    plt.title('ROC multiclase')
     plt.legend(loc="lower right")
     pass
 
@@ -108,9 +151,9 @@ def plot_ROC(XTest, YTest, clf, Labels, type = False ):
 
 def Imputation( X ):
 
-    missingValues = np.where(X == 'unknown')
-    row = missingValues[0]
-    Ypos = missingValues[1]
+    missings = np.where(X == 'unknown')
+    row = missings[0]
+    Ypos = missings[1]
     columns = np.unique(Ypos)
     categoricalAttributes = [1,2,3,4,5,6,7,8,9,14]
     Rest = np.setdiff1d(categoricalAttributes, columns)
@@ -151,11 +194,13 @@ def Imputation( X ):
         Train_Label = Label[normal_row].astype(np.int64)
         Knn.fit(Caracteristicas[normal_row,:],Train_Label)
         X[row_miss,i] = Knn.predict(Caracteristicas[row_miss,:])
+        print("{}:Tamaño conjunto de Test: {}".format(i,Test_Label.shape))
+        print("X: {}: :Caracteristicas: {}".format(X.shape,Caracteristicas.shape))
 
     return X
 
 
-# Gráfica de la importancia de cada característica
+#
 
 def plot_Importance( rfc ):
     importance = rfc.feature_importances_
@@ -164,7 +209,7 @@ def plot_Importance( rfc ):
     indices = indices[np.where(importance > 0.05)]
 
     plt.figure()
-    plt.title("Feature importances (> 0.01)")
+    plt.title("Feature importances (> 0.05)")
     plt.bar(range(len(indices)), importance[indices],
            color="r", align="center")
     plt.xticks(range(len(indices)), indices, rotation='vertical')
@@ -210,7 +255,7 @@ print(__doc__)
 # Constantes iniciales
 
 seed = 50627728
-maxiter = 10000
+maxiter = 100
 splits = 5
 siz_Test = 0.3
 saveName = 'Bank.pkl'
@@ -249,21 +294,35 @@ np.set_printoptions( formatter = { 'float': lambda x : "{0:0.4f}".format( x ) } 
 Features = np.load( "data/Feature.npy" )
 Labels   = np.load( "data/Label.npy" )
 
+"""
+poutcome = Features[ :, 14 ]
+values = np.unique( poutcome )
+print( "Unique: {}".format( values ) )
+for value in values:
+    a = np.where( poutcome == value )[0]
+    print( "\t{}: {}".format( value, len(a) ) )
+print()
 
-# Tratamiento de valores perdidos
+nonExistentResult = Labels[ np.where( poutcome == 'nonexistent' )[0] ]
+values = np.unique( nonExistentResult )
+print( "Unique: {}".format( values ) )
+for value in values:
+    a = np.where( nonExistentResult == value )[0]
+    print( "\t{}: {}".format( value, len(a) ) )
+print()
+"""
 
-missingValues = np.where( Features == 'unknown' )
-print( "Cantidad de valores perdidos: {}".format( len( missingValues[1] ) ) )
-print( "Distribucion:" )
-Features = Imputation( Features )
-missingValues = np.where( Features == 'unknown' )
-print( "Valores perdidos tras el procesamiento: {}".format( len( missingValues[1] ) ) )
+a = np.delete( Features, 14, axis = 1 )
+print( a[0,:] )
+nonExistent = np.where( a == 'nonexistent' )[0]
+print( nonExistent )
+print()
 
-
-# Separación del conjunto en Train y Test
+# Separación del conjunto en train y test
 
 X_train, X_test , y_train, y_test = train_test_split(
     Features, Labels, stratify=Labels, test_size = siz_Test, random_state = seed)
+
 
 
 # Eliminar las instancias donde la característica Duración vale 0
@@ -273,22 +332,19 @@ removeIndices = np.where( X_train[:,durationIndex] == 0 )[0]
 X_train = np.delete( X_train, removeIndices, axis = 0 )
 y_train = np.delete( y_train, removeIndices, axis = 0 )
 
-
 # Codificar las clases con índices numéricos.
 # En el conjunto original aparecen como 'yes' y 'no'
 
-Le = preprocessing.LabelEncoder().fit( y_train )
-
-index_of_positive = np.where(Le.classes_ == 'yes')[0]
-
-y_train = Le.transform(y_train)
-y_test = Le.transform(y_test)
+y_train = preprocessing.LabelEncoder().fit_transform( y_train )
 
 for i in np.unique( y_train ):
-    print( "Número de instancias en la clase {}: {}  {}"
-        .format( i, len( np.where( y_train == i )[0] ), len( np.where( y_test == i )[0] ) )
+    print( "Número de instancias en la clase {}: {}"
+        .format( i, len( np.where( y_train == i )[0] ) )
     )
 print()
+
+
+#############################Valores Perdidos###############################
 
 
 # Selección de hiperparametros que se evaluarán
@@ -304,70 +360,49 @@ parameters = [{
 
 # Normalización de las características numéricas
 
-SS = preprocessing.StandardScaler().fit( X_train[:,numericAttributes] )
-X_train[:,numericAttributes] = SS.transform( X_train[:,numericAttributes] )
-X_test[:,numericAttributes] = SS.transform( X_test[:,numericAttributes] )
+X_train[:,numericAttributes] = preprocessing.StandardScaler().fit( X_train[:,numericAttributes] ).transform( X_train[:,numericAttributes] )
+
+# Tratamiento de valores perdidos
+
+missings = np.where( X_train == 'unknown' )
+print( "Cantidad de valores perdidos: {}".format( len( missings[1] ) ) )
+print( "Distribucion:" )
+X_train = Imputation( X_train )
+missings = np.where( X_train == 'unknown' )
+print( "Valores perdidos tras el procesamiento: {}".format( len( missings[1] ) ) )
 
 # Binarización de características categóricas.
 # Usamos M.todense() para ver los datos en tamaño normal. Si no, se guardan en formato COOmatrix
 
-OHE = preprocessing.OneHotEncoder(
+X_train = preprocessing.OneHotEncoder(
     categorical_features = categoricalAttributes,
     handle_unknown = 'ignore'
-    ).fit( X_train )
-X_train = OHE.transform(X_train).todense()
-X_test = OHE.transform(X_test).todense()
+    ).fit_transform( X_train ).todense()
 
 # Equilibrado de representación de cada clase
 
 sm = SMOTE( ratio = 'minority', random_state = seed, k_neighbors = 3 )
 Xres, Yres = sm.fit_sample( X_train, y_train )
 
-print ("Tras el equilibrado con SMOTE:{}".format(sm.get_params()))
-for i in np.unique( y_train ):
-    print( "Número de instancias en la clase {}: {}  {}"
-        .format( i, len( np.where( y_train == i )[0] ), len( np.where( y_test == i )[0] ) )
-    )
-
 
 # Creación y ajuste del modelo de aprendizaje Random Forest
-# para la selección de instancais y características
 
 rfc = RandomForestClassifier(
-    random_state=seed,
     n_estimators = 50,
     n_jobs = -1,
     max_depth = 30,
     min_samples_leaf = 10,
-    max_features = "sqrt"
-    ).fit( Xres, Yres )
+    max_features = "sqrt" ).fit( Xres, Yres )
 
 
 # Valoración del aprendizaje realizado
 
 print( "Scorer al evaluar sobre el conjunto de aprendizaje: {}".format( rfc.score( X_train, y_train ) ) )
 
-plot_Importance(rfc=rfc)
-plt.show()
+#plot_Importance(rfc=rfc)
+#plt.show()
 
-print()
-print( "Valor en el test:" )
-print( classification_report( y_test, rfc.predict( X_test ) ) )
-plot_ROC(X_test, y_test, rfc, index_of_positive[0])
-plt.show()
-
-cls_nam = np.unique( y_train )
-plot_confusion_matrix(
-    confusion_matrix( y_test, rfc.predict( X_test ) ),
-    cls_nam,
-    normalize = False
-)
-
-plt.show()
-
-
-# Eliminación de instancias donde RandomForestClassifier no se equivoca,
-# así como de características con representación despreciable en la predicción
+#Aquellos donde RandomForestClassifier no se equivoca
 
 importance = rfc.feature_importances_
 indices = np.argsort( importance )
@@ -384,17 +419,27 @@ Xres = Xres[:,indices]
 Yres = Yres[prediction_index]
 
 
-# Pipe donde incluimos Escalado y Modelo
+##########################################################################
 
-pipe = Pipeline( [ ( 'Model', SVC( max_iter = maxiter, probability=False, random_state=seed ) ) ] )
+#plot_ROC_multiclass(X_test, y_test, rfc)
+#plt.show()
+
+# Pipe donde incluimos Escalado y Modelo
+######Pipe donde incluimos Escalado y Modelo##########
+
+pipe = Pipeline( [ ( 'Model', SVC( max_iter = maxiter ) ) ] )
 grid = GridSearchCV( pipe, param_grid = parameters, cv = splits, verbose=2, n_jobs=-1 )
 
 
 # Ajuste de los datos
 
+print( "\n\n\n\n\n\n\n\n" )
+print( np.unique(X_train[:,14]) )
+print( np.where( X_train == 'nonexistent' )[0] )
+print( "\n\n\n\n\n\n\n\n" )
 with warnings.catch_warnings(): #Catch conversion warnings
     warnings.simplefilter("ignore")
-    grid.fit(Xres, Yres)
+    grid.fit( X_train, y_train )
 
 
 # Guardado del modelo para un uso más rápido en futuros momentos
@@ -405,24 +450,21 @@ Save( grid, saveName )
 
 ### Mostrado de los resultados finales ###
 
-
 print( "Mejor valor de la cross validation: {:.4f}".format( grid.best_score_ ) )
 print( "Mejores parámetros: {}".format( grid.best_params_ ) )
 
 
 cls_nam = np.unique( y_train )
 plot_confusion_matrix(
-    confusion_matrix( y_test, grid.predict( X_test[:,indices] ) ),
+    confusion_matrix( y_test, grid.predict( X_test ) ),
     cls_nam,
-    normalize = False
+    normalize = True
 )
 plt.show()
 
-print()
 print( "Valor en el test:" )
-print( classification_report( y_test, grid.predict( X_test[:,indices] ) ) )
-plot_ROC(X_test[:,indices], y_test, grid, index_of_positive[0], type =True)
-plt.show()
+print( classification_report( y_test, grid.predict( X_test ) ) )
+
 
 """
 ####Impresion de los datos####

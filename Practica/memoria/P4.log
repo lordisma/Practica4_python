@@ -1,12 +1,15 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6600 64-bit) (preloaded format=pdflatex 2018.2.23)  6 JUN 2018 16:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.4.13)  6 JUN 2018 20:25
 entering extended mode
-**./P4.tex
-(P4.tex
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**P4.tex
+(./P4.tex
 LaTeX2e <2017-04-15>
-Babel <3.17> and hyphenation patterns for 75 language(s) loaded.
-(E:\programas\MikTex\tex\latex\base\article.cls
+Babel <3.10> and hyphenation patterns for 84 language(s) loaded.
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-(E:\programas\MikTex\tex\latex\base\size11.clo
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/size11.clo
 File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -21,17 +24,17 @@ File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(E:\programas\MikTex\tex\latex\base\fontenc.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
 
-(E:\programas\MikTex\tex\latex\base\t1enc.def
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 ))
-(E:\programas\MikTex\tex\latex\amsfonts\amssymb.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
-(E:\programas\MikTex\tex\latex\amsfonts\amsfonts.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \@emptytoks=\toks14
 \symAMSa=\mathgroup4
@@ -39,24 +42,24 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
-(E:\programas\MikTex\tex\latex\amsmath\amsmath.sty
-Package: amsmath 2017/09/02 v2.17a AMS math features
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2016/11/05 v2.16a AMS math features
 \@mathmargin=\skip43
 
 For additional information on amsmath, use the `?' option.
-(E:\programas\MikTex\tex\latex\amsmath\amstext.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01 AMS text
 
-(E:\programas\MikTex\tex\latex\amsmath\amsgen.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks15
 \ex@=\dimen103
 ))
-(E:\programas\MikTex\tex\latex\amsmath\amsbsy.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen104
 )
-(E:\programas\MikTex\tex\latex\amsmath\amsopn.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
 \inf@bad=\count87
@@ -97,7 +100,7 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
 LaTeX Info: Redefining \[ on input line 2817.
 LaTeX Info: Redefining \] on input line 2818.
 )
-(E:\programas\MikTex\tex\latex\float\float.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count99
 \float@exts=\toks20
@@ -105,20 +108,20 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks21
 \@floatcapt=\box29
 )
-(E:\programas\MikTex\tex\latex\algorithms\algorithm.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/algorithms/algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 
-(E:\programas\MikTex\tex\latex\base\ifthen.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
 \@float@every@algorithm=\toks22
 \c@algorithm=\count100
 )
-(E:\programas\MikTex\tex\latex\algorithms\algorithmic.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/algorithms/algorithmic.sty
 Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
 
-(E:\programas\MikTex\tex\latex\graphics\keyval.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks23
 )
@@ -128,48 +131,57 @@ Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \c@ALC@depth=\count104
 \ALC@tlm=\skip46
 \algorithmicindent=\skip47
-) (spanishAlgorithmic.tex)
-(E:\programas\MikTex\tex\latex\graphics\graphicx.sty
-Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+)
+(./spanishAlgorithmic.tex)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
-(E:\programas\MikTex\tex\latex\graphics\graphics.sty
-Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2017/04/14 v1.1b Standard LaTeX Graphics (DPC,SPQR)
 
-(E:\programas\MikTex\tex\latex\graphics\trig.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(E:\programas\MikTex\tex\latex\graphics-cfg\graphics.cfg
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 99.
 
-(E:\programas\MikTex\tex\latex\graphics-def\pdftex.def
-File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2017/01/12 v0.06k Graphics/color for pdfTeX
+
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count105
 ))
 \Gin@req@height=\dimen112
 \Gin@req@width=\dimen113
 )
-(E:\programas\MikTex\tex\latex\listings\listings.sty
-\lst@mode=\count105
+(/usr/local/texlive/2017/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count106
 \lst@gtempboxa=\box30
 \lst@token=\toks24
-\lst@length=\count106
+\lst@length=\count107
 \lst@currlwidth=\dimen114
-\lst@column=\count107
-\lst@pos=\count108
+\lst@column=\count108
+\lst@pos=\count109
 \lst@lostspace=\dimen115
 \lst@width=\dimen116
-\lst@newlines=\count109
-\lst@lineno=\count110
+\lst@newlines=\count110
+\lst@lineno=\count111
 \lst@maxwidth=\dimen117
 
-(E:\programas\MikTex\tex\latex\listings\lstmisc.sty
+(/usr/local/texlive/2017/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-\c@lstnumber=\count111
-\lst@skipnumbers=\count112
+\c@lstnumber=\count112
+\lst@skipnumbers=\count113
 \lst@framebox=\box31
 )
-(E:\programas\MikTex\tex\latex\listings\listings.cfg
+(/usr/local/texlive/2017/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
@@ -178,7 +190,7 @@ Package: listings 2015/06/04 1.6 (Carsten Heinz)
 LaTeX Warning: Unused global option(s):
     [spanish].
 
-(P4.aux)
+(./P4.aux)
 \openout1 = `P4.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
@@ -193,57 +205,29 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
 LaTeX Font Info:    ... okay on input line 29.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
 LaTeX Font Info:    ... okay on input line 29.
- (E:\programas\MikTex\tex\context\base\supp-pdf.mkii
+
+(/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count113
+\scratchcounter=\count114
 \scratchdimen=\dimen118
 \scratchbox=\box32
-\nofMPsegments=\count114
-\nofMParguments=\count115
+\nofMPsegments=\count115
+\nofMParguments=\count116
 \everyMPshowfont=\toks25
-\MPscratchCnt=\count116
+\MPscratchCnt=\count117
 \MPscratchDim=\dimen119
-\MPnumerator=\count117
-\makeMPintoPDFobject=\count118
+\MPnumerator=\count118
+\makeMPintoPDFobject=\count119
 \everyMPtoPDFconversion=\toks26
-) (E:\programas\MikTex\tex\latex\oberdiek\epstopdf-base.sty
-Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
-
-(E:\programas\MikTex\tex\generic\oberdiek\infwarerr.sty
-Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+) (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
 )
-(E:\programas\MikTex\tex\latex\oberdiek\grfext.sty
-Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
 
-(E:\programas\MikTex\tex\generic\oberdiek\kvdefinekeys.sty
-Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
-
-(E:\programas\MikTex\tex\generic\oberdiek\ltxcmds.sty
-Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
-)))
-(E:\programas\MikTex\tex\latex\oberdiek\kvoptions.sty
-Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
-
-(E:\programas\MikTex\tex\generic\oberdiek\kvsetkeys.sty
-Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
-
-(E:\programas\MikTex\tex\generic\oberdiek\etexcmds.sty
-Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
-
-(E:\programas\MikTex\tex\generic\oberdiek\ifluatex.sty
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ifluatex.sty
 Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
-Package etexcmds Info: Could not find \expanded.
-(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
-(etexcmds)             that some package has redefined \expanded.
-(etexcmds)             In the latter case, load this package earlier.
-)))
-(E:\programas\MikTex\tex\generic\oberdiek\pdftexcmds.sty
-Package: pdftexcmds 2018/01/21 v0.26 Utility functions of pdfTeX for LuaTeX (HO
-)
-
-(E:\programas\MikTex\tex\generic\oberdiek\ifpdf.sty
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
 )
 Package pdftexcmds Info: LuaTeX not detected.
@@ -251,41 +235,62 @@ Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 )
+(/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+))
+(/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 38.
 Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
-)
-\c@lstlisting=\count119
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+\c@lstlisting=\count120
 LaTeX Font Info:    Try loading font information for U+msa on input line 43.
 
-(E:\programas\MikTex\tex\latex\amsfonts\umsa.fd
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 43.
 
-(E:\programas\MikTex\tex\latex\amsfonts\umsb.fd
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 43.
 
-(E:\programas\MikTex\tex\latex\base\t1cmtt.fd
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) (P4.toc)
+) (./P4.toc)
 \tf@toc=\write3
 \openout3 = `P4.toc'.
 
- [1
 
-{C:/Users/Usuario/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Overfull \hbox (46.44753pt too wide) in paragraph at lines 53--54
-\T1/cmr/m/n/10.95 (BMDS), alo-jado en el repos-i-to-rio de apren-dizaje au-tomá
-tico UCI en \T1/cmtt/m/n/10.95 https://archive
- []
+[1
 
-
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 Overfull \hbox (3.63416pt too wide) in paragraph at lines 58--60
 \T1/cmr/m/n/10.95 val-ores nu-los en cier-tas car-ac-terís-ti-cas, rep-re-sen-t
 a-dos por la ca-dena ``\T1/cmtt/m/n/10.95 unknown\T1/cmr/m/n/10.95 '',
@@ -323,218 +328,302 @@ Underfull \hbox (badness 10000) in paragraph at lines 79--81
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
-
- []
-
 [3]
-Overfull \hbox (18.4058pt too wide) in paragraph at lines 92--93
-\T1/cmr/m/n/10.95 cor-rec-ta-mente. Tam-bién de-cir que este mod-elo era re-com
-en-dado en la de-scrip-ción
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 96--97
+Underfull \hbox (badness 10000) in paragraph at lines 86--88
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--99
+Overfull \hbox (9.29967pt too wide) in paragraph at lines 99--101
+\T1/cmr/m/n/10.95 Como úl-timo hemos probado una com-bi-nación de los dos mod-e
+-los men-ciona-dos.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--101
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 100--101
-
+Overfull \hbox (12.16669pt too wide) in paragraph at lines 102--103
+\T1/cmr/m/n/10.95 RF falla, por con-sid-er-arla una in-stan-cia rui-dosa, y re-
+duciendo así la en-ver-gadura
  []
 
 [4]
-Overfull \hbox (2.29936pt too wide) in paragraph at lines 108--109
+Overfull \hbox (12.21918pt too wide) in paragraph at lines 104--106
+[]\T1/cmr/m/n/10.95 También obten-emos de este apren-dizaje con RF cuáles son l
+as car-ac-terís-ti-cas
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 104--106
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--109
+
+ []
+
+
+Overfull \hbox (2.29936pt too wide) in paragraph at lines 117--118
 \T1/cmr/m/n/10.95 para su cor-recto tratamiento por las fun-ciones im-ple-men-t
 adas en el frame-work
  []
 
 
-Overfull \hbox (3.5838pt too wide) in paragraph at lines 108--109
-\T1/cmr/m/n/10.95 cod-i-fi-cación de las car-ac-terís-ti-cas categóri-cas y fi-
-nal-mente una es-tandarización
+Overfull \hbox (12.65831pt too wide) in paragraph at lines 117--118
+\T1/cmr/m/n/10.95 re-cod-i-fi-cación de las car-ac-terís-ti-cas categóri-cas y 
+fi-nal-mente una es-tandarización
  []
 
 
-Overfull \hbox (23.7518pt too wide) in paragraph at lines 111--112
-\T1/cmr/m/n/10.95 Cuando se gen-ero la base de datos BMDS, como hemos men-ciona
+Overfull \hbox (23.7518pt too wide) in paragraph at lines 121--123
+\T1/cmr/m/n/10.95 Cuando se gen-eró la base de datos BMDS, como hemos men-ciona
 do an-te-ri-or-mente,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 111--112
+Underfull \hbox (badness 10000) in paragraph at lines 121--123
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 113--114
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 124--126
 
  []
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 116.
+               Default added (so using `tbp') on input line 127.
 
 
-Overfull \hbox (38.8229pt too wide) in paragraph at lines 120--125
+Overfull \hbox (53.34132pt too wide) in paragraph at lines 131--136
  [][] 
  []
 
 
-Overfull \hbox (8.10162pt too wide) in paragraph at lines 127--128
+Overfull \hbox (8.10162pt too wide) in paragraph at lines 138--139
 []\T1/cmr/m/n/10.95 Como pode-mos com-pro-bar en la tabla 1[] la may-oría de es
 -tos se con-cen-tra-ban
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--128
+Underfull \hbox (badness 10000) in paragraph at lines 138--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 129--130
-
- []
-
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 131--132
+Underfull \hbox (badness 10000) in paragraph at lines 140--141
 
  []
 
 
-Overfull \hbox (3.8785pt too wide) in paragraph at lines 139--142
-\T1/cmr/m/n/10.95 de train-ing un fuerte des-bal-anceo en-tre am-bas clases, es
-te des-bal-anceo provoca
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--142
+Underfull \hbox (badness 10000) in paragraph at lines 142--143
 
  []
 
-<Matrix_de_Confucion_Imbalanceado.png, id=25, 462.528pt x 346.896pt>
-File: Matrix_de_Confucion_Imbalanceado.png Graphic file (type png)
-<use Matrix_de_Confucion_Imbalanceado.png>
-Package pdftex.def Info: Matrix_de_Confucion_Imbalanceado.png  used on input li
-ne 145.
-(pdftex.def)             Requested size: 231.26343pt x 173.44757pt.
-[6]
-Overfull \hbox (4.2876pt too wide) in paragraph at lines 151--152
+
+Underfull \hbox (badness 10000) in paragraph at lines 144--146
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--152
+
+ []
+
+[6] <img/Matrix_de_Confucion_Imbalanceado.png, id=30, 462.528pt x 346.896pt>
+File: img/Matrix_de_Confucion_Imbalanceado.png Graphic file (type png)
+
+<use img/Matrix_de_Confucion_Imbalanceado.png>
+Package pdftex.def Info: img/Matrix_de_Confucion_Imbalanceado.png used on input
+ line 155.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
+
+Overfull \hbox (4.2876pt too wide) in paragraph at lines 161--162
 []\T1/cmr/m/n/10.95 Para solu-cionar esto hemos us-ado el al-go-ritmo SMOTE, si
 -glas de Syn-thetic
  []
 
 
-Overfull \hbox (24.18457pt too wide) in paragraph at lines 153--156
+Overfull \hbox (24.18457pt too wide) in paragraph at lines 163--165
 []\T1/cmr/m/n/10.95 Los de-sar-rol-ladores de SMOTE han es-tu-di-ado este prob-
 lema, y su her-ramienta,
  []
 
 
-Overfull \hbox (8.90678pt too wide) in paragraph at lines 153--156
+Overfull \hbox (8.90678pt too wide) in paragraph at lines 163--165
 \T1/cmr/m/n/10.95 en lu-gar de úni-ca-mente re-ducir la can-ti-dad de in-stan-c
 ias de la clase may-ori-taria,
  []
 
 
-Overfull \hbox (33.75783pt too wide) in paragraph at lines 153--156
+Overfull \hbox (33.75783pt too wide) in paragraph at lines 163--165
 \T1/cmr/m/n/10.95 in-stan-cias neg-a-ti-vas habría ll-e-vado a au-men-tar sig-n
 i-fica-ti-va-mente el com-por-tamiento
  []
 
 
-Overfull \hbox (16.81064pt too wide) in paragraph at lines 153--156
-\T1/cmr/m/n/10.95 El al-go-ritmo SMOTE fun-ciona cre-ando ejem-p-los sin-téti-c
-os de la clase mi-nori-taría
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 180--181
+Underfull \hbox (badness 10000) in paragraph at lines 163--165
 
  []
 
-[7 <./Matrix_de_Confucion_Imbalanceado.png>] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 182--183
+[7 <./img/Matrix_de_Confucion_Imbalanceado.png>]
+Overfull \hbox (16.99571pt too wide) in paragraph at lines 191--192
+[]\T1/cmr/m/n/10.95 Para la im-ple-mentación de este al-go-ritmo hemos us-ado l
+a li-br-ería \T1/cmtt/m/n/10.95 imbalanced
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 191--192
 
  []
 
-<Matrix_de_Confucion_Balanceado.png, id=42, 462.528pt x 346.896pt>
-File: Matrix_de_Confucion_Balanceado.png Graphic file (type png)
-<use Matrix_de_Confucion_Balanceado.png>
-Package pdftex.def Info: Matrix_de_Confucion_Balanceado.png  used on input line
- 186.
-(pdftex.def)             Requested size: 231.26343pt x 173.44757pt.
 
-Overfull \hbox (7.20694pt too wide) in paragraph at lines 198--199
+Underfull \hbox (badness 10000) in paragraph at lines 193--194
+
+ []
+
+<img/Matrix_de_Confucion_Balanceado.png, id=37, 462.528pt x 346.896pt>
+File: img/Matrix_de_Confucion_Balanceado.png Graphic file (type png)
+
+<use img/Matrix_de_Confucion_Balanceado.png>
+Package pdftex.def Info: img/Matrix_de_Confucion_Balanceado.png used on input l
+ine 197.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
+ [8]
+Overfull \hbox (7.20694pt too wide) in paragraph at lines 209--210
 \T1/cmr/m/n/10.95 categórica como val-ores en-teros es que se es-tablece in-her
 -ente-mente una relación
  []
 
-[9 <./Matrix_de_Confucion_Balanceado.png>]
-Overfull \hbox (9.90596pt too wide) in paragraph at lines 200--201
+[9 <./img/Matrix_de_Confucion_Balanceado.png>]
+Overfull \hbox (9.90596pt too wide) in paragraph at lines 211--212
 []\T1/cmr/m/n/10.95 La solu-ción que ofrece la cod-i-fi-cación one-hot, crear u
 na nueva car-ac-terís-tica
  []
 
 
-Overfull \hbox (15.4595pt too wide) in paragraph at lines 202--203
+Overfull \hbox (15.4595pt too wide) in paragraph at lines 213--214
 []\T1/cmr/m/n/10.95 Este pro-ceso se conoce tam-bién como bi-na-rización de una
  vari-able categórica,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 206--207
+Overfull \hbox (4.59253pt too wide) in paragraph at lines 217--218
+\T1/cmr/m/n/10.95 en-tre-namiento, y nos de-vuelve aque-lla com-bi-nación de pa
+rámet-ros que mejores
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 219--220
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 216--217
+Underfull \hbox (badness 10000) in paragraph at lines 228--229
+
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 236--238
+
+ []
+
+<img/Features_Importance.png, id=54, 462.528pt x 346.896pt>
+File: img/Features_Importance.png Graphic file (type png)
+
+<use img/Features_Importance.png>
+Package pdftex.def Info: img/Features_Importance.png used on input line 242.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 248--250
+
+ []
+
+[11 <./img/Features_Importance.png>]
+<img/MC_RF.png, id=59, 462.528pt x 346.896pt>
+File: img/MC_RF.png Graphic file (type png)
+ <use img/MC_RF.png>
+Package pdftex.def Info: img/MC_RF.png used on input line 254.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 260--262
 
  []
 
 
-Overfull \hbox (3.73843pt too wide) in paragraph at lines 218--219
-\T1/cmr/m/n/10.95 cada ar-bol para ram-i-ficar. En el número de ar-bol vi-mos q
-ue con 50 obte-ni-amos
+Overfull \hbox (2.4201pt too wide) in paragraph at lines 263--264
+\T1/cmr/m/n/10.95 datos, quedán-donos con las car-ac-terís-ti-cas cuya im-por-t
+an-cia hu-biese su-per-ado
  []
 
-[10] [11] [12] (P4.aux)
+<img/EmsambledSVMRF.png, id=60, 462.528pt x 346.896pt>
+File: img/EmsambledSVMRF.png Graphic file (type png)
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+<use img/EmsambledSVMRF.png>
+Package pdftex.def Info: img/EmsambledSVMRF.png used on input line 266.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
+ [12 <./img/MC_RF.png>]
+Overfull \hbox (5.77678pt too wide) in paragraph at lines 272--274
+[]\T1/cmr/m/n/10.95 La predic-ción ahora ha em-pe-o-rado en los ca-sos neg-a-ti
+vos, pero ha mejo-rado
+ []
 
- ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 272--274
+
+ []
+
+<img/EmsembleROC.png, id=65, 462.528pt x 346.896pt>
+File: img/EmsembleROC.png Graphic file (type png)
+ <use img/EmsembleROC.png>
+Package pdftex.def Info: img/EmsembleROC.png used on input line 278.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
+
+[13 <./img/EmsambledSVMRF.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 287--289
+
+ []
+
+
+Overfull \hbox (3.37978pt too wide) in paragraph at lines 290--291
+\T1/cmr/m/n/10.95 uti-lizado primero un mod-elo de apren-dizaje com-puta-cional
+-mente poco cos-toso
+ []
+
+[14 <./img/EmsembleROC.png>] [15] (./P4.aux) ) 
 Here is how much of TeX's memory you used:
- 4063 strings out of 493303
- 53710 string characters out of 3142334
- 115647 words of memory out of 3000000
- 7543 multiletter control sequences out of 15000+200000
- 16628 words of font info for 48 fonts, out of 3000000 for 9000
+ 4144 strings out of 492995
+ 56116 string characters out of 6132704
+ 118912 words of memory out of 5000000
+ 7616 multiletter control sequences out of 15000+600000
+ 17317 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,8n,32p,1059b,493s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Usuario\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi60
-0\ecrm0900.pk> <C:\Users\Usuario\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknap
-pen\ec\dpi600\ecbx1200.pk> <C:\Users\Usuario\AppData\Local\MiKTeX\2.9\fonts\pk\
-ljfour\jknappen\ec\dpi600\ectt1095.pk> <C:\Users\Usuario\AppData\Local\MiKTeX\2
-.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1095.pk> <C:\Users\Usuario\AppData\Lo
-cal\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk> <C:\Users\Usuari
-o\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\
-Users\Usuario\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1
-200.pk> <C:\Users\Usuario\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\
-dpi600\ecrm1200.pk> <C:\Users\Usuario\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\
-jknappen\ec\dpi600\ecrm1728.pk><E:/programas/MikTex/fonts/type1/public/amsfonts
-/cm/cmmi10.pfb><E:/programas/MikTex/fonts/type1/public/amsfonts/cm/cmmi8.pfb><E
-:/programas/MikTex/fonts/type1/public/amsfonts/cm/cmr10.pfb><E:/programas/MikTe
-x/fonts/type1/public/amsfonts/cm/cmr8.pfb><E:/programas/MikTex/fonts/type1/publ
-ic/amsfonts/cm/cmsy10.pfb>
-Output written on P4.pdf (12 pages, 201528 bytes).
+ 39i,8n,32p,1088b,493s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-di
+st/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2017/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2017/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
+pe1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
+1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/
+public/cm-super/sfbx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/pu
+blic/cm-super/sfrm0900.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/publ
+ic/cm-super/sfrm1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public
+/cm-super/sfrm1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/c
+m-super/sfrm1728.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-
+super/sfti1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-su
+per/sftt1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-supe
+r/sftt1200.pfb>
+Output written on P4.pdf (15 pages, 387678 bytes).
 PDF statistics:
- 359 PDF objects out of 1000 (max. 8388607)
+ 127 PDF objects out of 1000 (max. 8388607)
+ 82 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
