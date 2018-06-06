@@ -79,11 +79,14 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Matriz de Confusi
 
 # Gráficas de la curva ROC multiclase
 
-def plot_ROC(XTest, YTest, clf, Labels ):
+def plot_ROC(XTest, YTest, clf, Labels, type = False ):
 
     row = np.where( YTest == i )
 
-    fpr, tpr, thresholds = roc_curve( YTest, clf.predict_proba(XTest)[:,Labels], pos_label=Labels )
+    if not type:
+        fpr, tpr, thresholds = roc_curve( YTest, clf.predict_proba(XTest)[:,Labels], pos_label=Labels )
+    else:
+        fpr, tpr, thresholds = roc_curve( YTest, clf.decision_function(XTest), pos_label=Labels )
 
     plt.figure()
     plt.plot(fpr,tpr,
@@ -383,7 +386,7 @@ Yres = Yres[prediction_index]
 # Pipe donde incluimos Escalado y Modelo
 ######Pipe donde incluimos Escalado y Modelo##########
 
-pipe = Pipeline( [ ( 'Model', SVC( max_iter = maxiter, probability=True, random_state=seed ) ) ] )
+pipe = Pipeline( [ ( 'Model', SVC( max_iter = maxiter, probability=False, random_state=seed ) ) ] )
 grid = GridSearchCV( pipe, param_grid = parameters, cv = splits, verbose=2, n_jobs=-1 )
 
 # Ajuste de los datos
@@ -417,7 +420,7 @@ plt.show()
 print()
 print( "Valor en el test:" )
 print( classification_report( y_test, grid.predict( X_test[:,indices] ) ) )
-plot_ROC(X_test[:,indices], y_test, grid, index_of_positive[0])
+plot_ROC(X_test[:,indices], y_test, grid, index_of_positive[0], type =True)
 plt.show()
 
 """
