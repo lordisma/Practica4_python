@@ -350,6 +350,15 @@ print( classification_report( y_test, rfc.predict( X_test ) ) )
 plot_ROC(X_test, y_test, rfc, index_of_positive[0])
 plt.show()
 
+cls_nam = np.unique( y_train )
+plot_confusion_matrix(
+    confusion_matrix( y_test, rfc.predict( X_test ) ),
+    cls_nam,
+    normalize = False
+)
+
+plt.show()
+
 #Aquellos donde RandomForestClassifier no se equivoca
 
 importance = rfc.feature_importances_
